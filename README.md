@@ -1,24 +1,7 @@
-# cosmic-component-lib
+# cosmic - a simple component library for vue 3
 
-## Project setup
-```
-npm install
-```
+Cosmic is a library of UI components created for Vue 3. The goal is to be simple, clean, readable, and quick to prototype.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Technologies
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Cosmic was created using and for Vue 3.
