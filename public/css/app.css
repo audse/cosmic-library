@@ -1,0 +1,47 @@
+
+body {
+    --co-body-background: 231, 235, 235;
+
+    background: rgb(var(--co-body-background));
+
+    --co-color-text: 51, 53, 54;
+    --co-color-text-tint-1: rgba(var(--co-color-text), 0.8);
+    --co-color-text-tint-2: rgba(var(--co-color-text), 0.6);
+    --co-color-background: 253, 253, 253;
+    --co-color-emphasis: 255, 105, 180;
+}
+
+* {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 16px;
+}
+
+.container {
+    margin: 0 auto;
+    width: 768px;
+}
+
+.block {
+    display: flex;
+}
+
+.narrow {
+    width: 480px;
+    margin: 0 auto;
+}
+
+.space-below {
+    padding-bottom: 2em;
+}
+
+.text-pink {
+    color: rgb(var(--co-color-emphasis));
+}
+
+.border-bottom-background {
+    border-bottom: 1px solid #e7ebeb;
+}
+
+.bg-lightgrey {
+    background: rgba(var(--co-body-background), 0.33);
+}
