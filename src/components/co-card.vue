@@ -70,7 +70,7 @@ import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
 
-    name: 'CoCard',
+    name: 'co-card',
 
     props: {
 

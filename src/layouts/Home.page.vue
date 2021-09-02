@@ -2,13 +2,13 @@
 
 <div class="container">
 
-    <Title h2 
+    <co-title h2 
     title="Cosmic Component Library" 
     subtitle="Cosmic is a library of UI components created for Vue 3. The goal is simplicity, readability, and fast prototyping." 
     :classes="title_classes"
     class="space-below" />
 
-    <CoCardExamples />
+    <co-card-examples />
 
 </div>
 
@@ -18,7 +18,7 @@
 
 import { defineComponent } from 'vue'
 
-import Title from './../components/co-title'
+import CoTitle from './../components/co-title'
 import CoCardExamples from './../components/examples/co-card.examples'
 
 export default defineComponent({
@@ -27,7 +27,7 @@ export default defineComponent({
 
     components: {
         CoCardExamples,
-        Title
+        CoTitle
     },
 
     setup () {

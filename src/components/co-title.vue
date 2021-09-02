@@ -30,7 +30,7 @@ import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
 
-    name: 'CoTitle',
+    name: 'co-title',
 
     props: {
         title: String,

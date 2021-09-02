@@ -12,7 +12,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
     
-    name: 'CoTextBlock',
+    name: 'co-textblock',
 
     props: {
         classes: String,

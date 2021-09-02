@@ -23,7 +23,7 @@ import { defineComponent, computed, reactive } from 'vue'
 
 export default defineComponent({
 
-    name: 'CoBadge',
+    name: 'co-badge',
 
     props: {
         content: String,

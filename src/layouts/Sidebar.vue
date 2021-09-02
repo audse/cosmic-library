@@ -1,18 +1,18 @@
 <template>
 
 <div class="sidebar">
-    <Title h5 title="cosmic" subtitle="component library" :classes="title_classes" />
+    <co-title h5 title="cosmic" subtitle="component library" :classes="title_classes" />
 
     <div class="space" />
     
-    <Title h6 title="basic elements" overline="components" :classes="title_classes" />
-    <Badge left="<" content="co-textblock" right=" />" :color="emphasis" /><br />
-    <Badge left="<" content="co-title" right=" />" :color="emphasis" /><br />
-    <Badge left="<" content="co-button" right=" />" :color="emphasis" /><br />
-    <Badge left="<" content="co-badge" right=" />" :color="emphasis" /><br />
+    <co-title h6 title="basic elements" overline="components" :classes="title_classes" />
+    <co-badge left="<" content="co-textblock" right=" />" :color="emphasis" /><br />
+    <co-badge left="<" content="co-title" right=" />" :color="emphasis" /><br />
+    <co-badge left="<" content="co-button" right=" />" :color="emphasis" /><br />
+    <co-badge left="<" content="co-badge" right=" />" :color="emphasis" /><br />
 
-    <Title h6 title="layout" overline="components" :classes="title_classes" />
-    <Badge left="<" content="co-card" right=" />" :color="emphasis" /><br />
+    <co-title h6 title="layout" overline="components" :classes="title_classes" />
+    <co-badge left="<" content="co-card" right=" />" :color="emphasis" /><br />
 
 </div>
 
@@ -22,16 +22,16 @@
 
 import { defineComponent } from 'vue'
 
-import Title from './../components/co-title'
-import Badge from './../components/co-badge'
+import CoTitle from './../components/co-title'
+import CoBadge from './../components/co-badge'
 
 export default defineComponent({
     
     name: 'HomePage',
 
     components: {
-        Title,
-        Badge
+        CoTitle,
+        CoBadge
     },
 
     setup () {

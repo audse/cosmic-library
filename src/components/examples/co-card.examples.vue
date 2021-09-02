@@ -1,171 +1,171 @@
 <template>
 
 <div class="space-below">
-    <Title h3 subtitle="co-cards are a general-purpose container for content." :classes="classes">
-        <Badge left="<" content="co-card" right=" />" :color="emphasis" />
+    <co-title h3 subtitle="co-cards are a general-purpose container for content." :classes="classes">
+        <co-badge left="<" content="co-card" right=" />" :color="emphasis" />
         co-card <span class="co-text-tint-1">component</span>
-    </Title>
+    </co-title>
 </div>
 
 <div class="block">
-    <Card :classes="classes" shadow-dark>
+    <co-card :classes="classes" shadow-dark>
         <LoremIpsum add="2s" />
         <template #toolbar>
-            <Badge content="Toolbar" :color="grey" subtle uppercase sm />
+            <co-badge content="Toolbar" :color="grey" subtle uppercase sm />
         </template>
         <template #toolbar-right>
-            <Badge content="toolbar-right" :color="white" uppercase sm />
+            <co-badge content="toolbar-right" :color="white" uppercase sm />
         </template>
         <template #header>
-            <Title h4 overline="overline" :classes="classes">
+            <co-title h4 overline="overline" :classes="classes">
                 Header (using co-title)
                 <template #subtitle>Subtitle - <LoremIpsum add="5-10w" /></template>
-            </Title>
+            </co-title>
         </template>
         <template #header-right>
-            <Badge content="header-right" :color="white" uppercase />
+            <co-badge content="header-right" :color="white" uppercase />
         </template>
         <template #before>
-            <Button label="before-content" :color="emphasis" subtle sm uppercase /> <LoremIpsum add="5w" />
+            <co-button label="before-content" :color="emphasis" subtle sm uppercase /> <LoremIpsum add="5w" />
         </template>
         <template #actions>
-            <Button label="Actions" :color="emphasis" subtle sm />
+            <co-button label="Actions" :color="emphasis" subtle sm />
         </template>
         <template #actions-right>
-            <Button label="Actions-Right" :color="emphasis" :text-color="truewhite" filled />
+            <co-button label="Actions-Right" :color="emphasis" :text-color="truewhite" filled />
         </template>
-    </Card>
+    </co-card>
 </div>
 
 <div class="block">
-    <Card :classes="classes" shadow-dark margin-lg>
+    <co-card :classes="classes" shadow-dark margin-lg>
         <template #header>
-            <Title h5 title="My Second Card" :classes="classes">
+            <co-title h5 title="My Second co-card" :classes="classes">
                 <template #subtitle><LoremIpsum add="4-8w" /></template>
-            </Title>
+            </co-title>
         </template>
         <template #header-right>
-            <Button :color="grey" round light sm>
+            <co-button :color="grey" round light sm>
                 <i class="gg-close" :style="{color: white}" />
-            </Button>
+            </co-button>
         </template>
         <template #before-content>
-            <Button label="&times;" :color="grey" light />
+            <co-button label="&times;" :color="grey" light />
         </template>
-    </Card>
+    </co-card>
 
-    <Card :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark margin-lg>
+    <co-card :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark margin-lg>
         <template #header>
-            <Title h5 title="My Third Card" :classes="{title: 'co-text-truewhite', subtitle: 'co-text-emphasis-text'}">
+            <co-title h5 title="My Third co-card" :classes="{title: 'co-text-truewhite', subtitle: 'co-text-emphasis-text'}">
                 <template #subtitle><LoremIpsum add="4-8w" /></template>
-            </Title>
-            <Badge content="incomplete" :color="truewhite" subtle sm />
-            <Badge content="new" :color="emphasis_light" subtle sm />
+            </co-title>
+            <co-badge content="incomplete" :color="truewhite" subtle sm />
+            <co-badge content="new" :color="emphasis_light" subtle sm />
         </template>
-    </Card>
+    </co-card>
 </div>
 <div class="block">
-    <Card :classes="{ before: 'co-bg-body-background block-center co-border-drag-drop' }" no-spacer shadow-dark>
+    <co-card :classes="{ before: 'co-bg-body-background block-center co-border-drag-drop' }" no-spacer shadow-dark>
         <template #before>
-            <div class="flex co-center">Empty Card using <Badge content="before" :color="white" />slot and <Badge content="no-spacer" :color="grey" /> prop.</div>
+            <div class="flex co-center">Empty co-card using <co-badge content="before" :color="white" />slot and <co-badge content="no-spacer" :color="grey" /> prop.</div>
         </template>
-    </Card>
+    </co-card>
 </div>
 
 <div class="block space-below">
-    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
-        <template #header><Title title="Option A" /></template>
+    <co-card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+        <template #header><co-title title="Option A" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
-            <Button label="Option A" :color="white" subtle />
+            <co-button label="Option A" :color="white" subtle />
         </template>
-    </Card>
-    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
-        <template #header><Title title="Option B" /></template>
+    </co-card>
+    <co-card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+        <template #header><co-title title="Option B" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
-            <Button label="Option B" :color="emphasis" outline />
+            <co-button label="Option B" :color="emphasis" outline />
         </template>
-    </Card>
-    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
-        <template #header><Title title="Option C" /></template>
+    </co-card>
+    <co-card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+        <template #header><co-title title="Option C" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
-            <Button label="Option C" :color="emphasis" filled :text-color="truewhite" />
+            <co-button label="Option C" :color="emphasis" filled :text-color="truewhite" />
         </template>
-    </Card>
+    </co-card>
 </div>
 
 
-<TextBlock class="co-text-tint-1">
+<co-textblock class="co-text-tint-1">
 
-<Title h5 title="Slots" overline="co-card" subtitle="each slot is optional. The card will add space only for the needed slots." side :classes="classes" />
-
-<div class="block space-above">
-    <Badge left="#" content="default" />
-</div>
-
+<co-title h5 title="Slots" overline="co-card" subtitle="each slot is optional. The card will add space only for the needed slots." side :classes="classes" />
 
 <div class="block space-above">
-    <Badge left="#" content="toolbar" :color="white" /><Badge left="#" content="toolbar-right" :color="white" />
+    <co-badge left="#" content="default" />
 </div>
 
 
 <div class="block space-above">
-    <Badge left="#" content="header" :color="white" /><Badge left="#" content="header-right" :color="white" />
+    <co-badge left="#" content="toolbar" :color="white" /><co-badge left="#" content="toolbar-right" :color="white" />
 </div>
 
 
 <div class="block space-above">
-    <Badge left="#" content="before" :color="white" />
-
-    Use in conjunction with <Badge content="no-spacer" :color="grey" sm /> to create an 'empty' card.
+    <co-badge left="#" content="header" :color="white" /><co-badge left="#" content="header-right" :color="white" />
 </div>
 
 
 <div class="block space-above">
-    <Badge left="#" content="actions" :color="white" />
-    <Badge left="#" content="actions-right" :color="white" />
+    <co-badge left="#" content="before" :color="white" />
+
+    Use in conjunction with <co-badge content="no-spacer" :color="grey" sm /> to create an 'empty' card.
+</div>
+
+
+<div class="block space-above">
+    <co-badge left="#" content="actions" :color="white" />
+    <co-badge left="#" content="actions-right" :color="white" />
 </div>
 
 <div class="space-below" />
 
-<Title h5 title="Props" overline="co-card" subtitle="Each prop is optional. By default, they are all disabled." side :classes="classes" />
+<co-title h5 title="Props" overline="co-card" subtitle="Each prop is optional. By default, they are all disabled." side :classes="classes" />
 
 <div class="block space-above">
-    <Badge content="boolean" :color="emphasis" />
-    <Badge content="no-margin" :color="white" />
-    <Badge content="margin-sm" :color="white" />
-    <Badge content="margin-lg" :color="white" />
+    <co-badge content="boolean" :color="emphasis" />
+    <co-badge content="no-margin" :color="white" />
+    <co-badge content="margin-sm" :color="white" />
+    <co-badge content="margin-lg" :color="white" />
 </div>
 
 
 <div class="block space-above">
-    <Badge content="boolean" :color="emphasis" />
-    <Badge content="no-spacer" :color="white" />
+    <co-badge content="boolean" :color="emphasis" />
+    <co-badge content="no-spacer" :color="white" />
 </div>
 
 
 <div class="block space-above">
-    <Badge content="boolean" :color="emphasis" />
-    <Badge content="shadow" :color="white" />
-    <Badge content="shadow-light" :color="white" />
-    <Badge content="shadow-dark" :color="white" />
+    <co-badge content="boolean" :color="emphasis" />
+    <co-badge content="shadow" :color="white" />
+    <co-badge content="shadow-light" :color="white" />
+    <co-badge content="shadow-dark" :color="white" />
 
-    choose <Badge content="shadow-light" :color="grey" sm /> for light backgrounds, or <Badge content="shadow-dark" :color="grey" sm /> for dark backgrounds.
+    choose <co-badge content="shadow-light" :color="grey" sm /> for light backgrounds, or <co-badge content="shadow-dark" :color="grey" sm /> for dark backgrounds.
 </div>
 
 
 <div class="block space-above">
-    <Badge content="boolean" :color="emphasis" />
-    <Badge content="dense" :color="white" />
+    <co-badge content="boolean" :color="emphasis" />
+    <co-badge content="dense" :color="white" />
 </div>
 
 <div class="space-above" />
 
-<Title h5 title="Class Object" overline="co-card" :classes="classes" />
+<co-title h5 title="Class Object" overline="co-card" :classes="classes" />
 
-</TextBlock>
+</co-textblock>
 
 </template>
 
@@ -175,23 +175,23 @@ import { defineComponent } from 'vue'
 
 import LoremIpsum from 'vue-lorem-ipsum'
 
-import Badge from './../co-badge'
-import Button from './../co-button'
-import Title from './../co-title'
-import Card from './../co-card'
-import TextBlock from './../co-textblock'
+import CoBadge from './../co-badge'
+import CoButton from './../co-button'
+import CoTitle from './../co-title'
+import CoCard from './../co-card'
+import CoTextblock from './../co-textblock'
 
 export default defineComponent({
     
-    name: 'CoCardExamples',
+    name: 'co-card-examples',
 
     components: {
         LoremIpsum,
-        Title,
-        Card,
-        Badge,
-        Button,
-        TextBlock,
+        CoTitle,
+        CoCard,
+        CoBadge,
+        CoButton,
+        CoTextblock,
     },
 
     setup () {

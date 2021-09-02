@@ -16,7 +16,7 @@ import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
 
-    name: 'CoButton',
+    name: 'co-button',
 
     props: {
         type: String,
