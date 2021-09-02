@@ -1,8 +1,9 @@
 <template>
 
 <div class="space-below">
-    <Title h3 subtitle="CoCards are a general-purpose container for content." :classes="classes">
-        <Badge content="co-card" :color="emphasis_light" large />
+    <Title h3 subtitle="co-cards are a general-purpose container for content." :classes="classes">
+        <Badge left="<" content="co-card" right=" />" :color="emphasis" />
+        co-card <span class="co-text-tint-1">component</span>
     </Title>
 </div>
 
@@ -10,13 +11,14 @@
     <Card :classes="classes" shadow-dark>
         <LoremIpsum add="2s" />
         <template #toolbar>
-            <Button label="Toolbar" :color="grey" subtle uppercase sm />
+            <Badge content="Toolbar" :color="grey" subtle uppercase sm />
         </template>
         <template #toolbar-right>
-            <Badge content="toolbar-right" :color="white" uppercase />
+            <Badge content="toolbar-right" :color="white" uppercase sm />
         </template>
         <template #header>
-            <Title h4 title="Header (using co-title)" overline="overline" :classes="classes">
+            <Title h4 overline="overline" :classes="classes">
+                Header (using co-title)
                 <template #subtitle>Subtitle - <LoremIpsum add="5-10w" /></template>
             </Title>
         </template>
@@ -36,7 +38,7 @@
 </div>
 
 <div class="block">
-    <Card :classes="classes" shadow-dark>
+    <Card :classes="classes" shadow-dark margin-lg>
         <template #header>
             <Title h5 title="My Second Card" :classes="classes">
                 <template #subtitle><LoremIpsum add="4-8w" /></template>
@@ -52,13 +54,13 @@
         </template>
     </Card>
 
-    <Card :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark>
+    <Card :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark margin-lg>
         <template #header>
-            <Badge content="incomplete" :color="truewhite" subtle sm />
-            <Badge content="new" :color="emphasis_light" subtle sm />
             <Title h5 title="My Third Card" :classes="{title: 'co-text-truewhite', subtitle: 'co-text-emphasis-text'}">
                 <template #subtitle><LoremIpsum add="4-8w" /></template>
             </Title>
+            <Badge content="incomplete" :color="truewhite" subtle sm />
+            <Badge content="new" :color="emphasis_light" subtle sm />
         </template>
     </Card>
 </div>
@@ -71,21 +73,21 @@
 </div>
 
 <div class="block space-below">
-    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark>
+    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
         <template #header><Title title="Option A" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
-            <Button label="Option A" />
+            <Button label="Option A" :color="white" subtle />
         </template>
     </Card>
-    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark>
+    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
         <template #header><Title title="Option B" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
-            <Button label="Option B" :color="emphasis" subtle />
+            <Button label="Option B" :color="emphasis" outline />
         </template>
     </Card>
-    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark>
+    <Card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
         <template #header><Title title="Option C" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
@@ -94,100 +96,74 @@
     </Card>
 </div>
 
-<TextBlock>
 
-<Title h6 title="Slots" overline="co-card" subtitle="each slot is optional. The card will add space only for the needed slots." side :classes="classes" />
+<TextBlock class="co-text-tint-1">
 
-<div class="block">
-    <div class="aside">
-        <Badge content="toolbar" :color="white" /><Badge content="toolbar-right" :color="white" />
-    </div>
-    <div class="flex co-text-tint-1">
-        Are within the upper padding. Generally used for buttons, labels, etc.
-    </div>
+<Title h5 title="Slots" overline="co-card" subtitle="each slot is optional. The card will add space only for the needed slots." side :classes="classes" />
+
+<div class="block space-above">
+    <Badge left="#" content="default" />
 </div>
 
 
-<div class="block">
-    <div class="aside">
-        <Badge content="header" :color="white" /><Badge content="header-right" :color="white" />
-    </div>
-    <div class="flex co-text-tint-1">
-        Make up the main title block.
-    </div>
+<div class="block space-above">
+    <Badge left="#" content="toolbar" :color="white" /><Badge left="#" content="toolbar-right" :color="white" />
 </div>
 
 
-<div class="block">
-    <div class="aside">
-        <Badge content="before" :color="white" />
-    </div>
-    <div class="flex co-text-tint-1">
-        Is a special section without padding: useful for alerts/warnings. Use in conjunction with <Badge content="no-spacer" :color="grey" /> to create an 'empty' card.
-    </div>
+<div class="block space-above">
+    <Badge left="#" content="header" :color="white" /><Badge left="#" content="header-right" :color="white" />
 </div>
 
-<div class="block">
-    <div class="aside">
-        <Badge content="default" />
-    </div>
-    <div class="flex co-text-tint-1">
-        is the main content block, with padding.
-    </div>
+
+<div class="block space-above">
+    <Badge left="#" content="before" :color="white" />
+
+    Use in conjunction with <Badge content="no-spacer" :color="grey" sm /> to create an 'empty' card.
 </div>
 
-<div class="block">
-    <div class="aside">
-        <Badge content="actions" :color="white" />
-        <Badge content="actions-right" :color="white" />
-    </div>
-    <div class="flex co-text-tint-1">
-        contain the buttons/actions for the card, within the lower padding.
-    </div>
+
+<div class="block space-above">
+    <Badge left="#" content="actions" :color="white" />
+    <Badge left="#" content="actions-right" :color="white" />
 </div>
 
-<Title h6 title="Props" overline="co-card" subtitle="Each prop is optional. By default, they are all disabled." side :classes="classes" />
+<div class="space-below" />
 
-<div class="block">
-    <div class="aside">
-        <Badge content="no-margin" :color="white" />
-        <Badge content="boolean" :color="grey" />
-    </div>
-    <div class="flex co-text-tint-1">
-        removes the default margin surrounding each card.
-    </div>
-</div>
-<div class="block">
-    <div class="aside">
-        <Badge content="no-spacer" :color="white" />
-        <Badge content="boolean" :color="grey" />
-    </div>
-    <div class="flex co-text-tint-1">
-        removes the extra padding from the top/bottom border radius.
-    </div>
-</div>
-<div class="block">
-    <div class="aside">
-        <Badge content="shadow" :color="white" />
-        <Badge content="shadow-light" :color="white" />
-        <Badge content="shadow-dark" :color="white" />
-        <Badge content="boolean" :color="grey" />
-    </div>
-    <div class="flex co-text-tint-1">
-        adds a subtle drop shadow. Choose only one of the three. <Badge content="shadow-light" :color="grey" /> is optimized for light backgrounds, while  <Badge content="shadow-dark" :color="grey" /> is optimized for dark mode.
-    </div>
-</div>
-<div class="block">
-    <div class="aside">
-        <Badge content="dense" :color="white" />
-        <Badge content="boolean" :color="grey" />
-    </div>
-    <div class="flex co-text-tint-1">
-        reduces the overall size.
-    </div>
+<Title h5 title="Props" overline="co-card" subtitle="Each prop is optional. By default, they are all disabled." side :classes="classes" />
+
+<div class="block space-above">
+    <Badge content="boolean" :color="emphasis" />
+    <Badge content="no-margin" :color="white" />
+    <Badge content="margin-sm" :color="white" />
+    <Badge content="margin-lg" :color="white" />
 </div>
 
-<Title h6 title="Class Object" />
+
+<div class="block space-above">
+    <Badge content="boolean" :color="emphasis" />
+    <Badge content="no-spacer" :color="white" />
+</div>
+
+
+<div class="block space-above">
+    <Badge content="boolean" :color="emphasis" />
+    <Badge content="shadow" :color="white" />
+    <Badge content="shadow-light" :color="white" />
+    <Badge content="shadow-dark" :color="white" />
+
+    choose <Badge content="shadow-light" :color="grey" sm /> for light backgrounds, or <Badge content="shadow-dark" :color="grey" sm /> for dark backgrounds.
+</div>
+
+
+<div class="block space-above">
+    <Badge content="boolean" :color="emphasis" />
+    <Badge content="dense" :color="white" />
+</div>
+
+<div class="space-above" />
+
+<Title h5 title="Class Object" overline="co-card" :classes="classes" />
 
 </TextBlock>
 
@@ -230,6 +206,7 @@ export default defineComponent({
             card: 'co-bg',
             before: 'co-padding co-bg-lightemphasis co-text-emphasis-text',
             overline: 'co-text-emphasis',
+            title: 'co-text',
             subtitle: 'co-text-tint-2',
             actions: 'co-bg-lightgrey',
             content: 'co-text-tint-1',
@@ -250,14 +227,14 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 
-.block {
-    margin: 1.25em 0;
+.space-above {
+    padding-top: 1.5em;
 }
 
-.aside {
-    width: 150px;
-    text-align: right;
-    margin-right: 1em;
+.block {
+    margin: 0.5em 0;
+    display: flex;
+    align-items: center;
 }
 
 </style>

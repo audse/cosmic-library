@@ -19,6 +19,7 @@ $co-color-emphasis: #da4790;
 
 $co-color-text: #d6dfe9;
 $co-color-text-tint-2: mix($co-color-text, $co-color-background);
+$co-color-text-tint-3: mix($co-color-text-tint-2, $co-color-background);
 $co-color-text-tint-1: mix($co-color-text-tint-2, $co-color-text);
 
 .co-text {
@@ -34,6 +35,10 @@ $co-color-text-tint-1: mix($co-color-text-tint-2, $co-color-text);
 
 .co-text-tint-2 {
     color: $co-color-text-tint-2;
+}
+
+.co-text-tint-3 {
+    color: $co-color-text-tint-3;
 }
 
 .co-text-emphasis {

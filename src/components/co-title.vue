@@ -1,6 +1,6 @@
 <template>
 
-<div :class="['co-title', class_list.title_group]" :style="{ fontSize: font_size }">
+<div :class="['co-title', class_list.title_group]">
     <div :class="['co-title-title', class_list.title]">
 
         <div :class="['co-title-overline', class_list.overline]">
@@ -12,7 +12,7 @@
 
         <slot></slot>
 
-        <span v-if="side" :class="['co-title-subtitle', class_list.subtitle]">
+        <span v-if="side" :class="['co-title-subtitle co-title-subtitle-side', class_list.subtitle]">
             {{ subtitle }}
             <slot name="subtitle-side"></slot>
         </span>
@@ -52,18 +52,44 @@ export default defineComponent({
     setup ( props ) {
         
         const class_list = computed( () => props.classes ? Object.assign({}, props.classes) : {} )
+
         const font_size = computed( () => {
             if ( props.h1 ) return '3rem'
             if ( props.h2 ) return '2rem'
             if ( props.h3 ) return '1.5rem'
             if ( props.h4 ) return '1.25rem'
-            if ( props.h5 ) return '1.15rem'
+            if ( props.h5 ) return '1.2rem'
             else return '1.1rem'
+        })
+
+        const line_height = computed( () => {
+            if ( props.h1 ) return '1'
+            if ( props.h2 ) return '1.1'
+            if ( props.h3 ) return '1.2'
+            if ( props.h4 ) return '1.25'
+            if ( props.h5 ) return '1.3'
+            else return '1.3'
+        })
+
+        const subtitle_font_size = computed( () => {
+            if ( props.h1 ) return '0.6em'
+            if ( props.h2 ) return '0.7em'
+            if ( props.h5 ) return '0.9em'
+            if ( props.h6 ) return '1em'
+            else return '0.8em'
+        })
+
+        const font_weight = computed( () => {
+            if ( props.h6 ) return '500'
+            else return '600'
         })
 
         return {
             class_list,
-            font_size
+            font_size,
+            line_height,
+            subtitle_font_size,
+            font_weight
         }
     }
 
@@ -77,6 +103,10 @@ export default defineComponent({
     box-sizing: border-box;
 }
 
+.co-title {
+    font-size: v-bind(font_size);
+}
+
 .co-title-overline {
 
     font-size: 0.7em;
@@ -88,8 +118,8 @@ export default defineComponent({
 .co-title-title {
 
     font-size: 1em;
-    font-weight: 600;
-    line-height: 1.2;
+    font-weight: v-bind(font_weight);
+    line-height: v-bind(line_height);
     letter-spacing: -0.015em;
 
     padding: 1em 0 0.25em 0;
@@ -97,12 +127,16 @@ export default defineComponent({
 
 .co-title-subtitle {
     
-    font-size: 0.8em;
+    font-size: v-bind(subtitle_font_size);
     font-weight: 500;
-    line-height: 1.3;
+    line-height: v-bind(line_height);
 
-    padding: 0.25em 0 0.5em 0;
+    padding: 0.25em 0;
 
+}
+
+.co-title-subtitle-side {
+    margin-left: 0.25em;
 }
 
 </style>

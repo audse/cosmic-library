@@ -2,6 +2,7 @@
 
 <div id="wrapper">
 
+    <Sidebar />
     <HomePage />
 
 </div>
@@ -9,13 +10,15 @@
 </template>
 
 <script>
-import HomePage from './pages/Home.page'
+import Sidebar from './layouts/Sidebar'
+import HomePage from './layouts/Home.page'
 
 export default {
 
     name: 'App',
 
     components: {
+        Sidebar,
         HomePage
     }
 }

@@ -1,6 +1,6 @@
 <template>
 
-<div :class="['co-card-container', !noMargin ? 'co-card-margin' : '']">
+<div :class="['co-card-container', marginSm ? 'co-card-margin-sm' : marginLg ? 'co-card-margin-lg' : !noMargin ? 'co-card-margin' : '']">
 <div :class="['co-card', class_list.card, shadowLight ? 'co-card-shadow-light' : shadowDark ? 'co-card-shadow-dark' : shadow ? 'co-card-shadow' : '']">
 
     <div v-if="!has_header && !has_toolbar && !noSpacer" class="co-card-spacer" />
@@ -78,7 +78,11 @@ export default defineComponent({
         classes: Object,
 
         dense: Boolean,
+
         noMargin: Boolean,
+        marginSm: Boolean,
+        marginLg: Boolean,
+
         noSpacer: Boolean,
         shadow: Boolean,
         shadowLight: Boolean,
@@ -140,6 +144,15 @@ export default defineComponent({
     margin: 0.5em;
 }
 
+.co-card-margin-sm {
+    margin: 0.25em;
+}
+
+
+.co-card-margin-lg {
+    margin: 0.75em;
+}
+
 .co-card-spacer {
     padding-top: 1.5em;
 }
@@ -172,7 +185,7 @@ export default defineComponent({
 }
 
 .co-card-shadow-dark {
-    box-shadow: 0px 5px 20px -15px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 5px 20px -15px rgba(0, 0, 0, 0.7);
 }
 
 .co-card-top {
