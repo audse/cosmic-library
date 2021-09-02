@@ -1,12 +1,16 @@
 <template>
     
+    <div class="co-button-container">
     <button :class="class_list" :type="type ? type : 'submit'" :style="style">
+        <div class="co-button-label">
         {{ label }}
         <slot></slot>
         <transition enter-active-class="ripple">
             <span></span>
         </transition>
+        </div>
     </button>   
+    </div>
 
 </template>
 <script>
@@ -31,6 +35,7 @@ export default defineComponent({
         outline: Boolean,
         subtle: Boolean,
         light: Boolean,
+        round: Boolean,
 
         sm: Boolean,
         lg: Boolean,
@@ -45,6 +50,9 @@ export default defineComponent({
 
             if ( props.uppercase ) string += ' co-button-uppercase'
 
+            if ( props.filled ) string += ' co-button-filled'
+            if ( props.round ) string += props.sm ? ' co-button-round-sm' : props.lg ? ' co-button-round-lg' : ' co-button-round'
+
             if ( props.sm ) string += ' co-button-sm'
             if ( props.lg ) string += ' co-button-lg'
 
@@ -56,11 +64,13 @@ export default defineComponent({
             return color + new_opacity.toString(16).toUpperCase();
         }
 
-        const new_color = computed( () => props.color ? change_alpha(props.color, 0.25) : 'rgba(0, 0, 0, 0.15)' )
+        const color_25 = computed( () => props.color ? change_alpha(props.color, 0.25) : 'rgba(0, 0, 0, 0.15)' )
+        const color_50 = computed( () => props.color ? change_alpha(props.color, 0.50) : 'rgba(0, 0, 0, 0.15)' )
+
         const style = {
             color: props.textColor ? props.textColor : props.subtle || props.outline ? props.color : 'inherit',
-            background: props.filled ? props.color : props.light ? new_color.value : 'none',
-            border: props.outline ? `2px solid ${props.color}` : 'none'
+            background: props.filled ? props.color : props.light ? color_25.value : 'none',
+            border: props.outline ? `2px solid ${color_50.value}` : 'none'
         }
 
         return {
@@ -74,7 +84,13 @@ export default defineComponent({
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+button,
+.co-button-container,
+.co-button {
+    box-sizing: border-box;
+}
 
 button {
     border: 0;
@@ -85,32 +101,71 @@ button {
     font-weight: unset;
     letter-spacing: unset;
     font-size: unset;
+    font-family: unset;
+}
+
+.co-button-container {
+    
+    /* Positioning */
+    display: inline-block;
+    position: relative;
+
+    /* Spacing */
+    margin: 0.25em 0.5em 0.25em 0;
+
+    /* Sizing */
+    width:  fit-content;
 }
 
 .co-button {
 
     /* Background */
-    border-radius: 1em;
+    border-radius: 1.25em;
 
     /* Text */
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 
     /* Positioning */
-    display: inline-block;
+    position: relative;
 
     /* Spacing */
-    margin: 0.25em 0.5em 0.25em 0;
-    padding: 0.25em 0.5em 0.15em 0.5em;
+    padding: 0.55em 0.9em;
 
     /* Sizing */
     width: fit-content;
 }
 
+.co-button-round, .co-button-round-sm, .co-button-round-lg {
+
+    .co-button-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%)
+    }
+}
+
+.co-button-round {
+    width: 2.25em;
+    height: 2.25em;
+}
+
+.co-button-round-sm {
+    width: 1.75em;
+    height: 1.75em;
+}
+
+.co-button-round-lg {
+    width: 3em;
+    height: 3em;
+    border-radius: 1.5em;
+}
+
 .co-button-sm {
     font-size: 0.75rem;
-    padding: 0.1em 0.3em;
+    padding: 0.4em 0.75em;
     border-width: 1px;
 }
 
@@ -121,6 +176,10 @@ button {
 
 .co-button-uppercase {
     text-transform: uppercase;
+}
+
+.co-button:hover {
+    transition: 200ms;
 }
 
 span.ripple {

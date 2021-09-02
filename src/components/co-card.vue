@@ -1,7 +1,9 @@
 <template>
 
 <div :class="['co-card-container', !noMargin ? 'co-card-margin' : '']">
-<div :class="['co-card', class_list.card, shadow ? 'co-card-shadow' : '']">
+<div :class="['co-card', class_list.card, shadowLight ? 'co-card-shadow-light' : shadowDark ? 'co-card-shadow-dark' : shadow ? 'co-card-shadow' : '']">
+
+    <div v-if="!has_header && !has_toolbar && !noSpacer" class="co-card-spacer" />
 
     <!-- `co-card-top` container -->
     <div v-if="has_header" :class="['co-card-top', class_list.top]">
@@ -12,7 +14,7 @@
             <div class="co-card-toolbar-left">
                 <slot name="toolbar"></slot>
             </div>
-            <div class="co-card-toolbar-right">
+            <div v-if="has_toolbar_right" class="co-card-toolbar-right">
                 <slot name="toolbar-right"></slot>
             </div>
         </div>
@@ -23,7 +25,7 @@
                 <div class="co-card-toolbar-left">
                     <slot name="header"></slot>
                 </div>
-                <div class="co-card-toolbar-right">
+                <div  v-if="has_header_right" class="co-card-toolbar-right">
                     <slot name="header-right"></slot>
                 </div>
             </div>
@@ -40,7 +42,7 @@
     <div v-if="has_content" :class="['co-card-content', class_list.content]">
 
         <!-- #content slot -->
-        <slot name="content"></slot>
+        <slot></slot>
 
     </div>
 
@@ -53,7 +55,7 @@
         <div class="co-card-toolbar-left">
             <slot name="actions"></slot>
         </div>
-        <div class="co-card-toolbar-right">
+        <div  v-if="has_actions_right" class="co-card-toolbar-right">
             <slot name="actions-right"></slot>
         </div>
 
@@ -79,6 +81,8 @@ export default defineComponent({
         noMargin: Boolean,
         noSpacer: Boolean,
         shadow: Boolean,
+        shadowLight: Boolean,
+        shadowDark: Boolean,
 
     },
 
@@ -86,21 +90,27 @@ export default defineComponent({
 
         const class_list = computed( () => props.classes ? props.classes : {} )
 
-        const has_toolbar = computed( () => slots.toolbar || slots.toolbarRight )
-        const has_header = computed( () => slots.header || slots.headerRight )
-        const has_before_content = computed( () => slots.before )
-        const has_content = computed( () => slots.content )
-        const has_actions = computed( () => slots.actions || slots.actionsRight )
+        const has_toolbar = computed( () => slots.toolbar || slots['toolbar-right'] ? true : false )
+        const has_toolbar_right = computed( () => slots['toolbar-right'] ? true : false )
+        const has_header = computed( () => slots.header || slots['header-right'] ? true : false )
+        const has_header_right = computed( () => slots['header-right'] ? true : false )
+        const has_before_content = computed( () => slots.before ? true : false )
+        const has_content = computed( () => slots.default ? true : false )
+        const has_actions = computed( () => slots.actions || slots['actions-right'] ? true : false )
+        const has_actions_right = computed( () => slots['actions-right'] ? true : false )
 
         const only_before_content = computed( () => has_before_content.value && !has_toolbar.value && !has_header.value && !has_content.value && !has_actions.value )
 
         return {
             class_list,
             has_toolbar,
+            has_toolbar_right,
             has_header,
+            has_header_right,
             has_before_content,
             only_before_content,
             has_content,
+            has_actions_right,
             has_actions,
         }
 
@@ -153,8 +163,16 @@ export default defineComponent({
     height: auto;
 }
 
+.co-card-shadow-light {
+    box-shadow: 0px 5px 15px -10px rgba(0, 0, 0, 0.15);
+}
+
 .co-card-shadow {
-    box-shadow: 0px 5px 15px -10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 15px -10px rgba(0, 0, 0, 0.3);
+}
+
+.co-card-shadow-dark {
+    box-shadow: 0px 5px 20px -15px rgba(0, 0, 0, 0.6);
 }
 
 .co-card-top {
@@ -172,6 +190,7 @@ export default defineComponent({
 
 .co-card-toolbar {
     display: flex;
+    align-items: center;
     padding: 1.75em 2.5em 0.25em 2.5em;
 }
 
@@ -181,6 +200,7 @@ export default defineComponent({
 
 .co-card-toolbar-left {
     flex: 1 auto;
+    align-self: center;
 }
 
 .co-card-toolbar-right {

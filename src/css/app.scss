@@ -1,10 +1,11 @@
 
 @import 'cosmic.variables';
 @import 'include-media';
-
+@import 'icons';
 
 body, html, #app {
     background: $co-body-background;
+    color: $co-color-text;
     
     font-family: 'Fira Sans', sans-serif;
     font-size: 18px;
@@ -31,12 +32,6 @@ body, html, #app {
 
 .flex {
     flex: 1;
-}
-
-.width-125 {
-    width: 125px;
-    text-align: right;
-    margin-right: 1em;
 }
 
 #wrapper {
