@@ -1,0 +1,51 @@
+
+$co-body-background: rgb(231, 235, 235);
+
+$co-color-text: #333536;
+$co-color-text-tint-1: lighten($co-color-text, 10);
+$co-color-text-tint-2: lighten($co-color-text, 20);
+
+$co-color-background: #f3f4f5;
+$co-color-emphasis: #ff69b4;
+
+.co-text {
+    color: $co-color-text;
+}
+
+.co-text-tint-1 {
+    color: $co-color-text-tint-1;
+}
+
+.co-text-tint-2 {
+    color: $co-color-text-tint-2;
+}
+
+.co-text-emphasis {
+    color: $co-color-emphasis;
+}
+
+.co-bg-emphasis {
+    background: $co-color-emphasis;
+}
+
+.co-bg {
+    background: $co-color-background;
+}
+
+.co-bg-lightgrey {
+    background: mix($co-body-background, $co-color-background);
+}
+
+.co-bg-lightemphasis {
+    background: scale-color($co-color-emphasis, $alpha: -90%);
+}
+
+.co-padding {
+    padding: 0.5em 1em;
+}
+
+.co-center {
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}

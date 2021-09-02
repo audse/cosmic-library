@@ -1,0 +1,66 @@
+
+@import 'cosmic.variables';
+@import 'include-media';
+
+
+body, html, #app {
+    background: $co-body-background;
+    
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 18px;
+
+    width: auto;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.block {
+    display: flex;
+}
+
+.block-center {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+.flex {
+    flex: 1;
+}
+
+.width-125 {
+    width: 125px;
+    text-align: right;
+    margin-right: 1em;
+}
+
+#wrapper {
+    margin: 0 auto;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@include media("<tablet") {
+
+    #wrapper {
+        width: 90vw;
+    }
+
+}
+
+@include media(">=tablet") {
+    
+    #wrapper {
+        width: 60vw;
+    }
+
+}
+
+.space-below {
+    padding-bottom: 2em;
+}

@@ -23,12 +23,14 @@ export default defineComponent({
         classes: String,
 
         color: String,
+        textColor: String,
 
         uppercase: Boolean,
 
         filled: Boolean,
         outline: Boolean,
         subtle: Boolean,
+        light: Boolean,
 
         sm: Boolean,
         lg: Boolean,
@@ -48,10 +50,16 @@ export default defineComponent({
 
             return string
         })
+        
+        const change_alpha = (color, opacity) => {
+            const new_opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+            return color + new_opacity.toString(16).toUpperCase();
+        }
 
+        const new_color = computed( () => props.color ? change_alpha(props.color, 0.25) : 'rgba(0, 0, 0, 0.15)' )
         const style = {
-            color: props.subtle || props.outline ? props.color : 'inherit',
-            background: props.filled ? props.color : 'none',
+            color: props.textColor ? props.textColor : props.subtle || props.outline ? props.color : 'inherit',
+            background: props.filled ? props.color : props.light ? new_color.value : 'none',
             border: props.outline ? `2px solid ${props.color}` : 'none'
         }
 

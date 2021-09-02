@@ -11,8 +11,14 @@
         {{ title }}
 
         <slot></slot>
+
+        <span v-if="side" :class="['co-title-subtitle', class_list.subtitle]">
+            {{ subtitle }}
+            <slot name="subtitle-side"></slot>
+        </span>
+        
     </div>
-    <div :class="['co-title-subtitle', class_list.subtitle]">
+    <div v-if="!side" :class="['co-title-subtitle', class_list.subtitle]">
         {{ subtitle }}
         <slot name="subtitle"></slot>
     </div>
@@ -32,6 +38,8 @@ export default defineComponent({
         overline: String,
 
         classes: Object,
+
+        side: Boolean,
 
         h1: Boolean,
         h2: Boolean,
@@ -64,6 +72,11 @@ export default defineComponent({
 </script>
 <style scoped>
 
+.co-title, .co-title-overline, .co-title-subtitle, .co-title-title {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 .co-title-overline {
 
     font-size: 0.7em;
@@ -83,10 +96,9 @@ export default defineComponent({
 }
 
 .co-title-subtitle {
-
-    color: var(--co-color-text-tint-2);
     
     font-size: 0.8em;
+    font-weight: 500;
     line-height: 1.3;
 
     padding: 0.25em 0 0.5em 0;
