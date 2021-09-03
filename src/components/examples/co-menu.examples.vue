@@ -9,16 +9,25 @@
 
 <div class="block">
 
-    <co-menu :bg="grey" width="50vw" shadow-dark>
-        <template #handler>
-            <co-button label="Show Menu" :color="emphasis" subtle />
-        </template>
-    </co-menu>
-    <co-menu :bg="grey" width="10vw" right shadow-dark>
-        <template #handler>
-            <co-button label="Show Menu" :color="emphasis" subtle />
-        </template>
-    </co-menu>
+    <div class="flex">
+
+        <co-menu :bg="grey" width="50vw" left shadow-dark hover>
+            <co-button label="Hover To Show" :color="emphasis" outline lg />
+        </co-menu>
+
+    </div>
+    <div class="flex flex-center">
+
+        <co-menu :bg="grey" width="30vw" center shadow-dark hover>
+            <co-button label="Hover To Show" :color="emphasis" subtle lg/>
+        </co-menu>
+    </div>
+    <div class="flex flex-right">
+
+        <co-menu :bg="grey" width="20vw" right shadow-dark>
+            <co-button label="Click To Show" :color="emphasis" :text-color="truewhite" filled  lg/>
+        </co-menu>
+    </div>
 
 </div>
 

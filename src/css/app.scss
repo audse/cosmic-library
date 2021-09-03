@@ -34,6 +34,16 @@ body, html, #app {
     flex: 1;
 }
 
+.flex-right {
+    align-self: flex-end;
+    text-align: right;
+}
+
+.flex-center {
+    justify-self: center;
+    text-align: center;
+}
+
 #wrapper {
     margin: 0 auto;
     max-width: 100%;

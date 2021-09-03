@@ -93,6 +93,7 @@ button,
 .co-button-container,
 .co-button {
     box-sizing: border-box;
+    z-index: 1;
 }
 
 button {
@@ -152,6 +153,7 @@ button {
     transform: translate(0, -1px);
     opacity: 0.9;
     transition: 200ms;
+    z-index: 1;
 }
 
 .co-button-round, .co-button-round-sm, .co-button-round-lg {
@@ -198,6 +200,7 @@ button {
 .co-button-ripple-filled, .co-button-ripple-subtle, .co-button-ripple-light, .co-button-ripple-outline {
     background-position: center;
     transition: background 800ms;
+    z-index: 1;
 }
 
 .co-button-ripple-filled:hover {
