@@ -83,6 +83,7 @@ export default defineComponent({
         marginSm: Boolean,
         marginLg: Boolean,
 
+        lessRound: Boolean,
         noSpacer: Boolean,
         shadow: Boolean,
         shadowLight: Boolean,
@@ -105,6 +106,8 @@ export default defineComponent({
 
         const only_before_content = computed( () => has_before_content.value && !has_toolbar.value && !has_header.value && !has_content.value && !has_actions.value )
 
+        const border_radius = computed( () => props.lessRound ? '1.5em' : '3.5em' )
+
         return {
             class_list,
             has_toolbar,
@@ -116,6 +119,8 @@ export default defineComponent({
             has_content,
             has_actions_right,
             has_actions,
+            
+            border_radius,
         }
 
     }
@@ -124,7 +129,7 @@ export default defineComponent({
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .co-card-container, 
 .co-card-margin, 
@@ -158,7 +163,7 @@ export default defineComponent({
 }
 
 .co-card-border-radius {
-    border-radius: 3.5em;
+    border-radius: v-bind(border_radius);
 }
 
 .co-card-container {
@@ -171,7 +176,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
 
-    border-radius: 3.5em;
+    border-radius: v-bind(border_radius);
     min-height: 8em;
     height: auto;
 }
@@ -191,13 +196,13 @@ export default defineComponent({
 .co-card-top {
     
     /* Box Style */
-    border-radius: 3.5em 3.5em 0 0;
+    border-radius: v-bind(border_radius) v-bind(border_radius) 0 0;
 
     /* Positioning */
     flex: 1;
     
     /* Sizing */
-    min-height: 3.5em;
+    min-height:  v-bind(border_radius);
 
 }
 
@@ -246,7 +251,7 @@ export default defineComponent({
 .co-card-actions {
 
     /* Box Style */
-    border-radius: 0 0 3.5em 3.5em;
+    border-radius: 0 0  v-bind(border_radius)  v-bind(border_radius);
     padding: 0.75em 2em 1.25em 2em;
 
     /* Positioning */
@@ -255,7 +260,7 @@ export default defineComponent({
     display: flex;
 
     /* Sizing */
-    min-height: 3.5em;
+    min-height: v-bind(border_radius);
     
 
 }

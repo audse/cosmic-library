@@ -161,6 +161,12 @@
     <co-badge content="dense" :color="white" />
 </div>
 
+
+<div class="block space-above">
+    <co-badge content="boolean" :color="emphasis" />
+    <co-badge content="less-round" :color="white" />
+</div>
+
 <div class="space-above" />
 
 <co-title h5 title="Class Object" overline="co-card" :classes="classes" />
@@ -226,10 +232,6 @@ export default defineComponent({
 
 </script>
 <style lang="scss" scoped>
-
-.space-above {
-    padding-top: 1.5em;
-}
 
 .block {
     margin: 0.5em 0;

@@ -149,6 +149,7 @@ button {
 }
 
 .co-button-container:hover {
+    transform: translate(0, -1px);
     opacity: 0.9;
     transition: 200ms;
 }

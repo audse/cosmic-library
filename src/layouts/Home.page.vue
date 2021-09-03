@@ -8,6 +8,10 @@
     :classes="title_classes"
     class="space-below" />
 
+    <co-menu-examples />
+
+    <div class="large-space" />
+
     <co-card-examples />
 
 </div>
@@ -19,6 +23,7 @@
 import { defineComponent } from 'vue'
 
 import CoTitle from './../components/co-title'
+import CoMenuExamples from './../components/examples/co-menu.examples'
 import CoCardExamples from './../components/examples/co-card.examples'
 
 export default defineComponent({
@@ -26,6 +31,7 @@ export default defineComponent({
     name: 'HomePage',
 
     components: {
+        CoMenuExamples,
         CoCardExamples,
         CoTitle
     },
