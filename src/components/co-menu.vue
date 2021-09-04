@@ -1,11 +1,13 @@
 
 <template>
 
-<div v-show="show_clickarea" class="co-menu-clickout-area" @click="clicked_out" />
+<div v-show="show_clickarea" class="co-menu-clickout-area" @click="clicked_out" @keyup.esc="clicked_out" />
 
 <span class="co-menu-group" @mouseenter="mouse_enter" @mouseleave="mouse_leave" @click="clicked">
 
     <span ref="origin" class="co-menu-origin">
+
+        <!-- Origin/Event Handler -->
         <slot></slot>
 
         <div v-if="!reduceHoverArea" class="co-menu-hover-area" />
@@ -16,14 +18,36 @@
                 <div v-show="show"  :class="['co-menu', shadow ? 'co-menu-shadow' : shadowDark ? 'co-menu-shadow-dark' : shadowLight ? 'co-menu-shadow-light' : '']">
                     <div :class="['co-menu-triangle', right ? 'co-menu-triangle-right' : center ? 'co-menu-triangle-center' : 'co-menu-triangle-left' ]" />
 
-                    <div ref="container" class="co-menu-bubble" :style="menu_shift">
-                        <div class="co-menu-before">
-                            <slot name="before"></slot>
-                        </div>
+                    <div class="co-menu-shift" :style="menu_shift">
+                        <div class="co-menu-bubble">
 
-                        <div class="co-menu-content">
-                            ...
-                            <slot name="content"></slot>
+                            <!-- Toolbar -->
+                            <div v-if="this.$slots.toolbar || this.$slots['toolbar-right']" :class="['co-menu-toolbar', class_list.toolbar]">
+                                <div v-if="this.$slots.toolbar" class="co-menu-toolbar-left">
+                                    <slot name="toolbar"></slot>
+                                </div>
+                                <div v-if="this.$slots['toolbar-right']" class="co-menu-toolbar-right">
+                                    <slot name="toolbar-right"></slot>
+                                </div>
+                            </div>
+
+                            <!-- Before Content -->
+                            <div :class="['co-menu-before', class_list.before]">
+                                <slot name="before"></slot>
+                            </div>
+
+                            <!-- Columns -->
+                            <div v-if="cols" :class="['co-menu-cols', class_list.cols]">
+                                <div v-for="col in cols" :key="`menu-col-${col}`" :class="['co-menu-col', class_list.col]">
+                                    <slot :name="`col-${col}`"></slot>                       
+                                </div>
+                            </div>
+
+                            <!-- Simple Main Content Block -->
+                            <div v-if="this.$slots.content" class="co-menu-content">
+                                <slot name="content"></slot>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -44,12 +68,21 @@ export default defineComponent({
 
     props: {
 
-        hover: Boolean,
-
         width: String,
         height: String,
         viewportWidth: Boolean,
         maxWidth: String,
+
+        left: Boolean,
+        right: Boolean,
+        center: Boolean,
+
+        cols: Number,
+
+        hover: Boolean,
+        reduceHoverArea: Boolean,
+
+        classes: Object,
 
         bg: String,
 
@@ -59,14 +92,14 @@ export default defineComponent({
 
         lessRound: Boolean,
 
-        left: Boolean,
-        right: Boolean,
-        center: Boolean,
-
-        reduceHoverArea: Boolean,
     },
 
     setup ( props ) {
+
+        const class_list = computed( () => {
+            if ( props.classes ) return Object.assign( {}, props.classes )
+            else return {}
+        })
 
 
         const border_radius = computed( () => props.lessRound ? '1.5em' : '3.5em' )
@@ -217,6 +250,7 @@ export default defineComponent({
         watch(to_show, show_menu)
 
         return {
+            class_list,
             border_radius,
             menu_radius,
 
@@ -337,6 +371,13 @@ export default defineComponent({
     
 }
 
+.co-menu-shift {
+
+    min-height: 8em;
+    width: v-bind(menu_width);
+    max-width: v-bind(maxWidth);
+}
+
 .co-menu-bubble {
 
     background: v-bind(bg);
@@ -344,11 +385,48 @@ export default defineComponent({
 
     display: block;
 
+    position: relative;
+
     min-height: 8em;
     width: v-bind(menu_width);
     max-width: v-bind(maxWidth);
     height: v-bind(height);
+    margin-bottom: 2em;
+    margin-right: 2em;
+}
 
+.co-menu-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 1.75em 1.5em 0.25em 1.5em;
+    box-sizing: border-box;
+}
+
+.co-menu-toolbar-left {
+    flex: 1 auto;
+    align-self: center;
+    display: flex;
+    align-items: center;
+}
+
+.co-menu-toolbar-right {
+    flex: 1 auto;
+    align-self: center;
+    text-align: right;
+    margin-left: 1.5em;
+}
+
+.co-menu-cols {
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    height: 100%;
+    min-height: 8em;
+}
+
+.co-menu-col {
+    flex: 1 auto;
+    box-sizing: border-box;
 }
 
 

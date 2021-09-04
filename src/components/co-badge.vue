@@ -1,6 +1,6 @@
 <template>
     
-<div :style="style" :class="['co-badge', uppercase ? 'co-badge-uppercase' : '', lg ? 'co-badge-size-lg' : sm ? 'co-badge-size-sm' : 'co-badge-size-md']">
+<span :style="style" :class="['co-badge', uppercase ? 'co-badge-uppercase' : '', lg ? 'co-badge-size-lg' : sm ? 'co-badge-size-sm' : 'co-badge-size-md']">
 
     <span class="co-badge-aside">
         {{ left }}
@@ -14,7 +14,7 @@
         {{ right }}
         <slot name="right"></slot>
     </span>
-</div>
+</span>
 
 </template>
 <script>
@@ -81,10 +81,12 @@ export default defineComponent({
 
     /* Sizing */
     width: fit-content;
+    min-width: max-content;
     height: fit-content;
 }
 
 .co-badge-aside {
+    display: inline;
     opacity: 0.5;
 }
 

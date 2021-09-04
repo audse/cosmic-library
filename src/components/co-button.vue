@@ -32,6 +32,7 @@ export default defineComponent({
         outline: Boolean,
         subtle: Boolean,
         light: Boolean,
+
         round: Boolean,
 
         sm: Boolean,
@@ -106,6 +107,7 @@ button {
     letter-spacing: unset;
     font-size: unset;
     font-family: unset;
+    display: inline;
 }
 
 .co-button-container {

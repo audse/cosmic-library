@@ -1,6 +1,6 @@
 <template>
 
-<div :class="['co-title', class_list.title_group]">
+<div :class="['co-title', class_list.title_group, inline ? 'co-title-inline' : '']">
     <div :class="['co-title-title', class_list.title]">
 
         <div :class="['co-title-overline', class_list.overline]">
@@ -47,6 +47,8 @@ export default defineComponent({
         h4: Boolean,
         h5: Boolean,
         h6: Boolean,
+
+        inline: Boolean,
     },
 
     setup ( props ) {
@@ -97,6 +99,10 @@ export default defineComponent({
 })
 </script>
 <style scoped>
+
+.co-title-inline {
+    display: inline-block;
+}
 
 .co-title, .co-title-overline, .co-title-subtitle, .co-title-title {
     max-width: 100%;

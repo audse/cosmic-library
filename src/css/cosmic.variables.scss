@@ -86,6 +86,10 @@ $co-color-text-tint-1: mix($co-color-text-tint-2, $co-color-text);
     text-align: center;
 }
 
+.co-right-text {
+    text-align: right;
+}
+
 .co-border-drag-drop {
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='63' ry='63' stroke='rgba(255,255,255,0.25)' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
     border-radius: 63px;

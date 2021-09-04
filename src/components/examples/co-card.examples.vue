@@ -8,7 +8,7 @@
 </div>
 
 <div class="block">
-    <co-card :classes="classes" shadow-dark>
+    <co-card :bg="bg" :classes="classes" shadow-dark>
         <LoremIpsum add="2s" />
         <template #toolbar>
             <co-badge content="Toolbar" :color="grey" subtle uppercase sm />
@@ -38,7 +38,7 @@
 </div>
 
 <div class="block">
-    <co-card :classes="classes" shadow-dark margin-lg>
+    <co-card :bg="bg" :classes="classes" shadow-dark margin-lg>
         <template #header>
             <co-title h5 title="My Second co-card" :classes="classes">
                 <template #subtitle><LoremIpsum add="4-8w" /></template>
@@ -54,7 +54,7 @@
         </template>
     </co-card>
 
-    <co-card :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark margin-lg>
+    <co-card :bg="bg" :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark margin-lg>
         <template #header>
             <co-title h5 title="My Third co-card" :classes="{title: 'co-text-truewhite', subtitle: 'co-text-emphasis-text'}">
                 <template #subtitle><LoremIpsum add="4-8w" /></template>
@@ -73,21 +73,21 @@
 </div>
 
 <div class="block space-below">
-    <co-card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+    <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
         <template #header><co-title title="Option A" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
             <co-button label="Option A" :color="white" subtle />
         </template>
     </co-card>
-    <co-card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+    <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
         <template #header><co-title title="Option B" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
             <co-button label="Option B" :color="emphasis" outline />
         </template>
     </co-card>
-    <co-card :classes="{ card: 'co-bg-lightgrey co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+    <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
         <template #header><co-title title="Option C" /></template>
         <LoremIpsum add="10w" />
         <template #actions>
@@ -207,6 +207,8 @@ export default defineComponent({
         const truewhite = '#ffffff'
         const white = '#a9b6c5'
         const grey = '#7d8894'
+        const bg = '#303542'
+        const darkbg = '#1d212b'
 
         const classes = {
             card: 'co-bg',
@@ -224,6 +226,8 @@ export default defineComponent({
             truewhite,
             white,
             grey,
+            bg,
+            darkbg,
             classes
         }
     }

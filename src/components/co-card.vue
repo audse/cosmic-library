@@ -76,6 +76,7 @@ export default defineComponent({
 
         // Style
         classes: Object,
+        bg: String,
 
         dense: Boolean,
 
@@ -108,6 +109,8 @@ export default defineComponent({
 
         const border_radius = computed( () => props.lessRound ? '1.5em' : '3.5em' )
 
+        const background = computed( () => props.bg ? props.bg : 'initial')
+
         return {
             class_list,
             has_toolbar,
@@ -121,6 +124,7 @@ export default defineComponent({
             has_actions,
             
             border_radius,
+            background
         }
 
     }
@@ -172,6 +176,8 @@ export default defineComponent({
 }
 
 .co-card {
+
+    background: v-bind(background);
 
     display: flex;
     flex-direction: column;
