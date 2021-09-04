@@ -15,37 +15,45 @@
         <div :class="['co-menu-container', right ? 'co-menu-container-right' : center ? 'co-menu-container-center' : 'co-menu-container-left']">
     
             <transition name="co-menu">
-                <div v-show="show"  :class="['co-menu', shadow ? 'co-menu-shadow' : shadowDark ? 'co-menu-shadow-dark' : shadowLight ? 'co-menu-shadow-light' : '']">
-                    <div :class="['co-menu-triangle', right ? 'co-menu-triangle-right' : center ? 'co-menu-triangle-center' : 'co-menu-triangle-left' ]" />
+                <div v-show="show"  :class="['co-menu']">
+                    <div v-if="!noArrow" :class="['co-menu-triangle', class_list.arrow, right ? 'co-menu-triangle-right' : center ? 'co-menu-triangle-center' : 'co-menu-triangle-left' ]" />
 
                     <div class="co-menu-shift" :style="menu_shift">
-                        <div class="co-menu-bubble">
+                        <div :class="['co-menu-bubble', class_list.menu, shadow ? 'co-menu-shadow' : shadowDark ? 'co-menu-shadow-dark' : shadowLight ? 'co-menu-shadow-light' : '']">
 
                             <!-- Toolbar -->
                             <div v-if="this.$slots.toolbar || this.$slots['toolbar-right']" :class="['co-menu-toolbar', class_list.toolbar]">
-                                <div v-if="this.$slots.toolbar" class="co-menu-toolbar-left">
-                                    <slot name="toolbar"></slot>
+                                <div v-if="this.$slots.toolbar" :class="['co-menu-toolbar-left', class_list.toolbar]">
+                                    <slot name="toolbar" :co_menu="co_menu"></slot>
                                 </div>
                                 <div v-if="this.$slots['toolbar-right']" class="co-menu-toolbar-right">
-                                    <slot name="toolbar-right"></slot>
+                                    <slot name="toolbar-right" :co_menu="co_menu"></slot>
                                 </div>
                             </div>
 
+                            <!-- Spacer -->
+                            <div v-if="!this.$slots.toolbar && !this.$slots['toolbar-right'] && this.$slots.header" class="co-menu-spacer" />
+
+                            <!-- Simple Main Content Block -->
+                            <div v-if="this.$slots.header" class="co-menu-header">
+                                <slot name="header" :co_menu="co_menu"></slot>
+                            </div>
+
                             <!-- Before Content -->
-                            <div :class="['co-menu-before', class_list.before]">
-                                <slot name="before"></slot>
+                            <div :class="['co-menu-before', class_list.before, only_before_content ? 'co-menu-before-only' : '']">
+                                <slot name="before" :co_menu="co_menu"></slot>
                             </div>
 
                             <!-- Columns -->
                             <div v-if="cols" :class="['co-menu-cols', class_list.cols]">
-                                <div v-for="col in cols" :key="`menu-col-${col}`" :class="['co-menu-col', class_list.col]">
-                                    <slot :name="`col-${col}`"></slot>                       
+                                <div v-for="col in cols" :key="`menu-col-${col}`" :class="['co-menu-col', class_list.col, !noColPadding ? 'co-menu-col-padding' : '']">
+                                    <slot :name="`col-${col}`" :co_menu="co_menu"></slot>                       
                                 </div>
                             </div>
 
                             <!-- Simple Main Content Block -->
                             <div v-if="this.$slots.content" class="co-menu-content">
-                                <slot name="content"></slot>
+                                <slot name="content" :co_menu="co_menu"></slot>
                             </div>
 
                         </div>
@@ -77,10 +85,12 @@ export default defineComponent({
         right: Boolean,
         center: Boolean,
 
-        cols: Number,
+        startOpen: Boolean,
 
         hover: Boolean,
         reduceHoverArea: Boolean,
+
+        cols: Number,
 
         classes: Object,
 
@@ -91,10 +101,15 @@ export default defineComponent({
         shadowDark: Boolean,
 
         lessRound: Boolean,
+        noColPadding: Boolean,
+        noSpacer: Boolean,
+        noArrow: Boolean,
 
     },
 
-    setup ( props ) {
+    emits: ['co-menu-close'],
+
+    setup ( props, { slots, emit } ) {
 
         const class_list = computed( () => {
             if ( props.classes ) return Object.assign( {}, props.classes )
@@ -179,8 +194,6 @@ export default defineComponent({
             const viewport_to_element_right = origin.getBoundingClientRect().right
             const viewport_to_element_center = ( ( viewport_to_element_right - viewport_to_element_left ) * 0.5 ) + viewport_to_element_left
 
-            console.log(viewport_to_element_center, width, ( viewport_to_element_center - (width * 0.5) ))
-
             // No need to shift the menu if it already fully fits in the viewport
             if ( ( ( viewport_to_element_center + (width * 0.5) ) > document.documentElement.clientWidth ) || ( viewport_to_element_center - (width * 0.5) < 0 ) ) {
                 
@@ -192,27 +205,25 @@ export default defineComponent({
 
                 shift_value = ` ${shift_value}px`
 
-                console.log(width, shift_value)
-
                 return {
                     position: 'absolute',
                     left: shift_value
                 }
             } else {
-                console.log('...')
                 return {}
             }
         }
 
-        const to_show = ref(false)
-        const show = ref(false)
-        const show_clickarea = ref(false)
+        const to_show = ref(props.startOpen ? true : false)
+        const show = ref(props.startOpen ? true : false)
+        const show_clickarea = ref(props.startOpen ? true : false)
 
         // `to_show` is used to debounce the menu's opening and closing
         // This is to avoid stuttering
         const show_menu = () => {
             return setTimeout( () => {
                 show.value = to_show.value
+                if ( !show.value ) emit ('co-menu-close')
             }, 100)
         }
 
@@ -243,11 +254,23 @@ export default defineComponent({
 
         const clicked_out = () => {
             to_show.value = false
-            show.value = false
             show_clickarea.value = false
         }
 
+        const co_menu = {
+            show_menu,
+            mouse_enter,
+            mouse_leave,
+            clicked,
+            clicked_out
+        }
+
         watch(to_show, show_menu)
+
+        const only_before_content = computed( () => {
+            if ( slots.before && Object.keys(slots).length === 2 ) return true
+            else return false
+        })
 
         return {
             class_list,
@@ -267,6 +290,9 @@ export default defineComponent({
             mouse_leave,
             clicked,
             clicked_out,
+            co_menu,
+
+            only_before_content
         }
     },
 
@@ -317,7 +343,7 @@ export default defineComponent({
 
     width: v-bind(menu_width);
     max-width: v-bind(maxWidth);
-    padding: 8px 0 0 0;
+    padding: 16px 0 0 0;
 
     position: absolute;
     z-index: 1000;
@@ -384,6 +410,7 @@ export default defineComponent({
     border-radius: v-bind(menu_radius);
 
     display: block;
+    box-sizing: border-box;
 
     position: relative;
 
@@ -393,6 +420,16 @@ export default defineComponent({
     height: v-bind(height);
     margin-bottom: 2em;
     margin-right: 2em;
+    z-index: 101;
+}
+
+.co-menu-before-only {
+    width: v-bind(menu_width);
+    max-width: v-bind(maxWidth);
+    border-radius: v-bind(menu_radius);
+    height: v-bind(height);
+    min-height: 8em;
+    box-sizing: border-box;
 }
 
 .co-menu-toolbar {
@@ -405,8 +442,7 @@ export default defineComponent({
 .co-menu-toolbar-left {
     flex: 1 auto;
     align-self: center;
-    display: flex;
-    align-items: center;
+    text-align: left;
 }
 
 .co-menu-toolbar-right {
@@ -429,6 +465,19 @@ export default defineComponent({
     box-sizing: border-box;
 }
 
+.co-menu-col-padding {
+    
+    padding: 0.25em 0.25em 2em 0.25em;
+
+    &:first-of-type {
+        padding-left: 2em;
+    }
+
+    &:last-of-type {
+        padding-right: 1em;
+    }
+}
+
 
 .co-menu-shadow-light {
     box-shadow: 0px 5px 25px -20px rgba(0, 0, 0, 0.15);
@@ -444,34 +493,48 @@ export default defineComponent({
 
 .co-menu-content {
 
-    padding: 2em 1.5em;
+    padding: 0 2.5em 2em 1.5em;
+    text-align: left;
 
+}
+
+.co-menu-header {
+
+    padding: 0 2.5em 2em 1.5em;
+    text-align: left;
+
+}
+
+.co-menu-spacer {
+    padding: 2em;
 }
 
 .co-menu-triangle {
     width: 0;
     height: 0;
     border-style: solid;
-    border-color: transparent transparent v-bind(bg) transparent;
 
     position: absolute;
-    top: -16px;
-    z-index: 100;
+    top: -29px;
+    z-index: 102;
 }
 
 .co-menu-triangle-left {
-    border-width: 0 32px 16px 0px;
+    border-width: 0 32px 32px 0px;
+    border-color: transparent transparent v-bind(bg) transparent;
 }
 
 .co-menu-triangle-right {
     right: 0;
-    border-width: 0 0 16px 32px;
+    border-width: 0 0 32px 32px;
+    border-color: transparent transparent v-bind(bg) transparent;
 }
 
 .co-menu-triangle-center {
     left: 50%;
     transform: translate(-50%, 0);
     border-width: 0 32px 32px 32px;
+    border-color: transparent transparent v-bind(bg) transparent;
 }
 
 .co-menu-enter-active,

@@ -83,7 +83,7 @@ $co-color-text-tint-1: mix($co-color-text-tint-2, $co-color-text);
 }
 
 .co-center-text {
-    text-align: center;
+    text-align: center !important;
 }
 
 .co-right-text {

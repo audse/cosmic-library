@@ -54,7 +54,7 @@
         </template>
     </co-card>
 
-    <co-card :bg="bg" :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark margin-lg>
+    <co-card :bg="emphasis" :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark margin-lg>
         <template #header>
             <co-title h5 title="My Third co-card" :classes="{title: 'co-text-truewhite', subtitle: 'co-text-emphasis-text'}">
                 <template #subtitle><LoremIpsum add="4-8w" /></template>

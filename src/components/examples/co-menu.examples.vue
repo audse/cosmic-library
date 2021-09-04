@@ -11,23 +11,45 @@
 
     <div class="flex">
 
-        <co-menu :bg="darkgrey" left hover shadow-dark viewport-width max-width="40vw" :cols="3" :classes="{ col: 'co-padding' }">
+        <co-menu :bg="darkgrey" left hover shadow-dark viewport-width max-width="40vw" :cols="3" :classes="{ before: 'co-bg-lightemphasis co-padding' }">
             <co-button label="Hover Over Me!" :color="emphasis" outline lg />
             <template #toolbar>
-                <co-button label="!" round :color="emphasis" filled />
-                <co-title h5 title="Toolbar Left" overline="co-menu" :classes="classes" inline />
+                <div class="flex-align-center">
+                    <co-button label="!" round :color="emphasis" filled />
+                    <co-title h5 title="Toolbar Left" overline="co-menu" :classes="classes" inline />
+                </div>
             </template>
             <template #toolbar-right>
                 <co-button label="toolbar-right" :color="emphasis" light sm :text-color="truewhite" />
             </template>
+            <template #before>
+                <co-badge content="Before" :color="emphasis" />
+            </template>
             <template #col-1>
-                <co-title h6 title="Column 1" subtitle="First Column" :classes="classes" />
+                <co-title h6 title="Column 1" subtitle="First Column" overline="col-1" :classes="classes" />
+                <LoremIpsum add="5w" />
             </template>
             <template #col-2>
-                <co-title h6 title="Column 2" subtitle="Second Column" :classes="classes" />
+                <co-title h6 title="Column 2" subtitle="Second Column" overline="col-2" :classes="classes" />
+                <LoremIpsum add="5w" />
             </template>
             <template #col-3>
-                <co-title h6 title="Column 3" subtitle="Third Column" :classes="classes" />
+                <co-title h6 title="Column 3" subtitle="Third Column" overline="col-3" :classes="classes" />
+                <LoremIpsum add="5w" />
+            </template>
+        </co-menu>
+
+    </div>
+    <div class="flex flex-center">
+
+        <co-menu bg="rgba(0,0,0,0.6)" center shadow-dark max-width="400px" viewport-width start-open :classes="{ menu: 'co-glass', before: 'co-center co-padding' }">
+            <co-button label="Click To Close!" :color="emphasis" subtle lg />
+            <template v-slot:before="{ co_menu }">
+                <co-title h4 title="Are you sure?" subtitle="Are you sure you want to do that action?" overline="Example" :classes="classes" />
+                <div class="co-padding">
+                    <co-button label="No, take me back" :color="emphasis" subtle  @click="co_menu.clicked_out()" />
+                    <co-button label="Yes, continue" :color="emphasis" :textcolor="truewhite" filled />
+                </div>
             </template>
         </co-menu>
 
@@ -35,21 +57,19 @@
     <div class="flex flex-right">
 
         <co-menu :bg="darkgrey" right shadow-dark max-width="40vw" viewport-width>
-            <co-button label="Click On Me!" :color="emphasis" :text-color="truewhite" filled  lg/>
-            <template #content>
-                <div class="block">
-                    <co-card :bg="darkbg" shadow-dark>
-                        <co-title h5 title="Example With Cards" :classes="classes" />
-                    </co-card>
-                    <co-card :bg="darkbg" shadow-dark />
-                </div>
+            <co-button label="Click On Me!" :color="emphasis" :text-color="truewhite" filled lg />
+            <template #toolbar-right>
+                <co-badge content="Important" :color="emphasis" uppercase />
+            </template>
+            <template #header>
+                <co-title h5 title="Nested Elements" subtitle="any element can be nested within co-menus." overline="info" :classes="classes" />  
             </template>
         </co-menu>
     </div>
 
 </div>
+<co-card />
 
-<div class="space-above space-below" />
 <co-textblock class="co-text-tint-1 space-above">
 
 <co-title h5 title="Slots" overline="co-menu" subtitle="all slots (except the default) are optional." side :classes="classes" />
@@ -59,19 +79,19 @@
     The default slot is the origin. This is the event handler for your menu. Anything added to this slot will open a menu upon click/hover.
 </div>
 
-<div class="textblock space-above">
+<div class="block space-above">
     <co-badge left="#" content="toolbar" :color="white" /><co-badge left="#" content="toolbar-right" :color="white" />
 </div>
 
-<div class="textblock space-above">
+<div class="block space-above">
     <co-badge left="#" content="before" :color="white" />
 </div>
 
-<div class="textblock space-above">
+<div class="block space-above">
     <co-badge left="#" content="content" :color="white" />
 </div>
 
-<div class="textblock space-above">
+<div class="block space-above">
     <co-badge left="#" content="col-n" :color="white" />
     <co-badge left="#" content="col-1" :color="grey" />
     <co-badge left="#" content="col-2" :color="grey" />
@@ -81,6 +101,18 @@
 </div>
 
 <div class="space-below" />
+
+<co-title h5 title="Scoped Slots" overline="co-menu" subtitle="all slots (except the default) have an optional scope." side :classes="classes" />
+
+<div class="textblock space-above">
+    <co-badge content="co_menu" :color="emphasis" />
+    <co-badge left="co_menu." content="show_menu()" :color="white" />
+    <co-badge left="co_menu." content="mouse_enter()" :color="white" />
+    <co-badge left="co_menu." content="mouse_leave()" :color="white" />
+    <co-badge left="co_menu." content="clicked()" :color="white" />
+    <co-badge left="co_menu." content="clicked_out()" :color="white" />
+</div>
+
 
 <co-title h5 title="Props" overline="co-menu" subtitle="not all the props are optional." side :classes="classes" />
 
@@ -147,13 +179,18 @@
 </div>
 
 <div class="textblock space-above">
-    <co-badge content="string" :color="emphasis" />
-    <co-badge content="bg" :color="white" />
+    <co-badge content="boolean" :color="emphasis" />
+    <co-badge content="start-open" :color="white" />
+</div>
+
+<div class="textblock space-above">
+    <co-badge content="int" :color="emphasis" />
+    <co-badge content="cols" :color="white" />
 </div>
 
 <div class="textblock">
-    <co-badge content="int" :color="emphasis" />
-    <co-badge content="cols" :color="white" />
+    <co-badge content="string" :color="emphasis" />
+    <co-badge content="bg" :color="white" />
 </div>
 
 <div class="textblock">
@@ -168,11 +205,27 @@
     <co-badge content="boolean" :color="emphasis" />
     <co-badge content="less-round" :color="white" />
 </div>
+<div class="textblock">
+    <co-badge content="boolean" :color="emphasis" />
+    <co-badge content="no-col-padding" :color="white" />
+</div>
+<div class="textblock">
+    <co-badge content="boolean" :color="emphasis" />
+    <co-badge content="no-arrow" :color="white" />
+</div>
 
 
 <div class="space-above" />
 
-<co-title h5 title="Class Object" overline="co-card" :classes="classes" />
+<co-title h5 title="Class Object" overline="co-menu" :classes="classes" />
+
+<div class="space-above" />
+
+<co-title h5 title="Emits" overline="co-menu" :classes="classes" />
+
+<div class="textblock">
+    <co-badge content="co-menu-close" right="no props" :color="white" />
+</div>
 
 </co-textblock>
 
@@ -183,7 +236,7 @@
 
 import { defineComponent } from 'vue'
 
-// import LoremIpsum from 'vue-lorem-ipsum'
+import LoremIpsum from 'vue-lorem-ipsum'
 
 import CoTitle from './../co-title'
 import CoButton from './../co-button'
@@ -197,7 +250,7 @@ export default defineComponent({
     name: 'co-card-examples',
 
     components: {
-        // LoremIpsum,
+        LoremIpsum,
         CoTitle,
         CoButton,
         CoBadge,
@@ -236,21 +289,3 @@ export default defineComponent({
 })
 
 </script>
-<style lang="scss" scoped>
-
-.space-above {
-    padding-top: 1.5em;
-}
-
-.block {
-    margin: 0.5em 0;
-    display: flex;
-    align-items: center;
-}
-
-.menu-block {
-    flex: 1 auto;
-    position: relative;
-}
-
-</style>

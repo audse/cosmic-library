@@ -1,5 +1,6 @@
 
 @import 'cosmic.variables';
+@import 'cosmic.utils';
 @import 'include-media';
 @import 'icons';
 
@@ -24,8 +25,7 @@ body, html, #app {
 
 .textblock {
     display: block;
-    margin-top: 0.25em;
-    margin-bottom: 1em;
+    margin: 0.5em 0;
 }
 
 .block-center {
@@ -34,10 +34,16 @@ body, html, #app {
     justify-items: center;
     align-content: center;
     align-items: center;
+    width: 100%;;
 }
 
 .flex {
     flex: 1;
+}
+
+.flex-align-center {
+    display: flex;
+    align-items: center;
 }
 
 .flex-right {
