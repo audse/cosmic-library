@@ -11,21 +11,15 @@
 
     <div class="flex">
 
-        <co-menu :bg="grey" width="50vw" left shadow-dark hover>
-            <co-button label="Hover To Show" :color="emphasis" outline lg />
+        <co-menu :bg="grey" left shadow-dark hover viewport-width max-width="40vw">
+            <co-button label="Hover Over Me!" :color="emphasis" outline lg />
         </co-menu>
 
-    </div>
-    <div class="flex flex-center">
-
-        <co-menu :bg="grey" width="30vw" center shadow-dark hover>
-            <co-button label="Hover To Show" :color="emphasis" subtle lg/>
-        </co-menu>
     </div>
     <div class="flex flex-right">
 
-        <co-menu :bg="grey" width="20vw" right shadow-dark>
-            <co-button label="Click To Show" :color="emphasis" :text-color="truewhite" filled  lg/>
+        <co-menu :bg="grey" right shadow-dark max-width="40vw" viewport-width>
+            <co-button label="Click On Me!" :color="emphasis" :text-color="truewhite" filled  lg/>
         </co-menu>
     </div>
 

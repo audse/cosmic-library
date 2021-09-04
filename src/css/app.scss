@@ -59,7 +59,7 @@ body, html, #app {
 
 @include media ("<=tablet") {
     .sidebar {
-        display: hidden;
+        display: none;
     }
 }
 
