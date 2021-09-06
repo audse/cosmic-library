@@ -7,11 +7,11 @@
     </co-title>
 </div>
 
-<div class="block">
+<div class="flex-align-center">
 
     <div class="flex">
 
-        <co-menu :bg="darkgrey" left hover shadow-dark viewport-width max-width="40vw" :cols="3" :classes="{ before: 'co-bg-lightemphasis co-padding' }">
+        <co-menu :bg="darkgrey" left hover shadow-dark viewport-width max-width="900px" :cols="3" :classes="{ before: 'co-bg-lightemphasis co-padding' }">
             <co-button label="Hover Over Me!" :color="emphasis" outline lg />
             <template #toolbar>
                 <div class="flex-align-center">

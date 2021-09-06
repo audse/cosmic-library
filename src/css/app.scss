@@ -21,6 +21,7 @@ body, html, #app {
 
 .block {
     display: flex;
+    max-width: 100%;
 }
 
 .textblock {
@@ -64,6 +65,26 @@ body, html, #app {
     background: mix(mix($co-body-background, $co-color-background), $co-body-background,);
 }
 
+
+.container {
+    flex: 1 auto;
+    padding: 5em 0 5em 3em;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.large-space {
+    padding: 3em;
+}
+
+.space-below {
+    padding-bottom: 2em;
+}
+
+.space-above {
+    padding-top: 1.5em;
+}
+
 .sidebar {
     flex: 1 auto;
     background: $co-body-background;
@@ -72,6 +93,10 @@ body, html, #app {
 @include media ("<=tablet") {
     .sidebar {
         display: none;
+    }
+
+    .container {
+        padding: 5em 1em;
     }
 }
 
@@ -86,21 +111,4 @@ body, html, #app {
         padding-right: 25vw;
     }
 
-}
-
-.container {
-    flex: 1 auto;
-    padding: 5em 0 5em 3em;
-}
-
-.large-space {
-    padding: 3em;
-}
-
-.space-below {
-    padding-bottom: 2em;
-}
-
-.space-above {
-    padding-top: 1.5em;
 }

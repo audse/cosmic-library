@@ -8,11 +8,16 @@
     :classes="title_classes"
     class="space-below" />
 
-    <co-menu-examples />
 
-    <div class="large-space" />
+    <co-tabs-examples />
 
-    <co-card-examples />
+    <!-- <div class="hidden"> -->
+        <div class="large-space" />
+        <co-menu-examples />
+
+
+        <co-card-examples />
+    <!-- </div> -->
 
 </div>
 
@@ -25,6 +30,7 @@ import { defineComponent } from 'vue'
 import CoTitle from './../components/co-title'
 import CoMenuExamples from './../components/examples/co-menu.examples'
 import CoCardExamples from './../components/examples/co-card.examples'
+import CoTabsExamples from './../components/examples/co-tabs.examples'
 
 export default defineComponent({
     
@@ -33,6 +39,7 @@ export default defineComponent({
     components: {
         CoMenuExamples,
         CoCardExamples,
+        CoTabsExamples,
         CoTitle
     },
 
@@ -52,3 +59,10 @@ export default defineComponent({
 })
 
 </script>
+<style>
+
+.hidden {
+    display: none;
+}
+
+</style>

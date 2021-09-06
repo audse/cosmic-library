@@ -10,7 +10,7 @@
         <!-- Origin/Event Handler -->
         <slot></slot>
 
-        <div v-if="!reduceHoverArea" class="co-menu-hover-area" />
+        <div v-if="!reduceHoverArea && hover" class="co-menu-hover-area" />
 
         <div :class="['co-menu-container', right ? 'co-menu-container-right' : center ? 'co-menu-container-center' : 'co-menu-container-left']">
     
