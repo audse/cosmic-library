@@ -9,37 +9,43 @@
 </div>
 
 
-<div class="block space-below">
+<article class="space-below">
     <slot></slot>
-</div>
+</article>
 
 
 <div class="block space-above">
-    <co-tabs :tabs="3" :start-tab="1" :bg="hex.darkbg" shadow-dark>
+    <co-tabs :tabs="5" :start-tab="1" :bg="hex.darkbg" shadow-dark>
         <template #label-1>
-            <co-title h6 title="Slots" :overline="component" :classes="classes" />
+            <co-title h6 title="Slots" :classes="classes" />
         </template>
         <template #label-2>
-            <co-title h6 title="Props" :overline="component" :classes="classes" />
+            <co-title h6 title="Scoped Slots" :classes="classes" />
         </template>
         <template #label-3>
-            <co-title h6 title="Class Object" :overline="component" :classes="classes" />
+            <co-title h6 title="Props" :classes="classes" />
+        </template>
+        <template #label-4>
+            <co-title h6 title="Emits" :classes="classes" />
+        </template>
+        <template #label-5>
+            <co-title h6 title="Class Object" :classes="classes" />
         </template>
 
         <template #panel-1>
-
             <slot name="slots"></slot>
-
         </template>
         <template #panel-2>
-
-            <slot name="props"></slot>
-
+            <slot name="scoped"></slot>
         </template>
         <template #panel-3>
-
+            <slot name="props"></slot>
+        </template>
+        <template #panel-4>
+            <slot name="emits"></slot>
+        </template>
+        <template #panel-5>
             <slot name="classes"></slot>
-
         </template>
     </co-tabs>
 </div>
@@ -70,13 +76,14 @@ export default defineComponent({
         subtitle: String,
     },
 
-    setup () {
+    setup ( ) {
 
         const classes = {
             overline: 'co-text-emphasis',
             title: 'co-text',
             subtitle: 'co-text-tint-2'
         }
+
         
         return {
             classes,

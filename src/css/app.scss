@@ -19,6 +19,17 @@ body, html, #app {
     box-sizing: border-box;
 }
 
+article {
+    display: block;
+    width: 100%;
+}
+
+section {
+    display: flex;
+    width: 100%;
+    flex: none;
+}
+
 .block {
     display: flex;
     max-width: 100%;

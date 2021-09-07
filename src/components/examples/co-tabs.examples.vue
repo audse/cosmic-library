@@ -25,43 +25,40 @@
     <template #slots>
         <co-title h6 title="Required Slots" :classes="classes" />
 
-        <div class="textblock">
-            <co-badge left="#" content="label-n" :color="hex.white" />
-        </div>
-        <div class="textblock">
-            <co-badge left="#" content="panel-n" :color="hex.white" />
-        </div>
+        <p><co-badge left="#" content="label-n" :color="hex.white" /></p>
+
+        <p><co-badge left="#" content="panel-n" :color="hex.white" /></p>
     </template>
 
     <!-- Props -->
     <template #props>
         <co-title h6 title="Required Props" :classes="classes" />
 
-        <div class="textblock">
+        <p>
             <co-badge content="int" :color="hex.emphasis" />
             <co-badge content="tabs" :color="hex.white" />
-        </div>
+        </p>
 
         <co-title h6 title="Optional Props" :classes="classes" />
 
-        <div class="textblock">
+        <p>
             <co-badge content="int" :color="hex.emphasis" />
             <co-badge content="start-tab" :color="hex.white" />
-        </div>
-        <div class="textblock">
+        </p>
+        <p>
             <co-badge content="string" :color="hex.emphasis" />
             <co-badge content="bg" :color="hex.white" />
-        </div>
-        <div class="textblock">
+        </p>
+        <p>
             <co-badge content="boolean" :color="hex.emphasis" />
             <co-badge content="shadow" :color="hex.white" />
             <co-badge content="shadow-light" :color="hex.white" />
             <co-badge content="shadow-dark" :color="hex.white" />
-        </div>
-        <div class="textblock">
+        </p>
+        <p>
             <co-badge content="boolean" :color="hex.emphasis" />
             <co-badge content="less-round" :color="hex.white" />
-        </div>
+        </p>
     </template>
 
     <!-- Class Object -->
