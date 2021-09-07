@@ -327,6 +327,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 
+.co-menu-container {
+    isolation: isolate;
+}
+
 .co-menu-container,
 .co-menu,
 .co-menu-content,
