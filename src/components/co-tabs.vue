@@ -5,7 +5,7 @@
     <!-- Tab Labels -->
     <div :class="['co-tabs-labels']">
         <div v-for="tab in tabs" :key="`co-tabs-label-${tab}`" :class="['co-tabs-label', tab===current_tab ? 'co-tabs-label-active' : '']" @click="current_tab=tab">
-            <label :for="`Tab ${tab}`"><slot :name="`tab-label-${tab}`"></slot></label>
+            <label :for="`Tab ${tab}`"><slot :name="`label-${tab}`"></slot></label>
         </div>
     </div>
 
@@ -15,10 +15,10 @@
         <div v-for="tab in tabs" :key="`co-tabs-panel-${tab}`">
             <div v-show="current_tab===tab">
                 <div class="co-tabs-panel-before">
-                    <slot :name="`tab-panel-${tab}-before`"></slot>
+                    <slot :name="`panel-${tab}-before`"></slot>
                 </div>
                 <div class="co-tabs-panel">
-                    <slot :name="`tab-panel-${tab}`"></slot>
+                    <slot :name="`panel-${tab}`"></slot>
                 </div>
             </div>
         </div>
@@ -87,7 +87,6 @@ export default defineComponent({
 
 .co-tabs-labels {
     display: flex;
-    // max-width: calc( 100% - ( ( v-bind(border_radius) * 2 ) + 1em ) );
     justify-content: center;
     z-index: 1;
 }
@@ -104,15 +103,19 @@ export default defineComponent({
     display: flex;
     justify-content: center;
 
-    padding: 1em 0 calc( v-bind(border_radius) + 1em ) 0;
+    padding: 1em 0 calc( v-bind(border_radius) + 0.5em ) 0;
 
-    margin-left: calc( ( v-bind(border_radius) * 2 ) * -1 );
+    margin-left: calc( ( v-bind(border_radius) - 0.5em ) * -1 );
+    transition: 150ms;
+    margin-top: 5px;
+    z-index: 1;
 
     &:first-of-type {
         margin-left: 0;
     }
 
     label {
+        cursor: pointer;
         opacity: 0.75;
 
     }
@@ -120,7 +123,6 @@ export default defineComponent({
     &:hover {
         opacity: 0.75;
         transition: 150ms;
-        margin-top: -1px;
     }
 
 }
@@ -129,6 +131,7 @@ export default defineComponent({
     background: v-bind(bg);
     opacity: 1;
     z-index: 2;
+    width: 120%;
 
     label {
         opacity: 1;
@@ -136,6 +139,8 @@ export default defineComponent({
 
     &:hover {
         opacity: 1;
+        transition: 150ms;
+        margin-top: 0px;
     }
 }
 
@@ -152,8 +157,9 @@ export default defineComponent({
 }
 
 .co-tabs-panel {
-    padding: v-bind(border_radius) 1.5em;
+    padding: calc( v-bind(border_radius) - 1em ) 1.5em;
     z-index: 10;
+
 }
 
 
