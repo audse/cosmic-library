@@ -7,9 +7,10 @@
     </co-title>
 </div>
 
-<!-- <div class="block space-blow">
+<div class="block space-blow">
     <co-card :bg="hex.darkbg" shadow-dark no-spacer :classes="{ before: 'space-above' }">
         <template #before>
+            <co-title h5 title="co-tabs Within co-card" />
             <co-tabs :tabs="3" :start-tab="1" :bg="hex.darkgrey" shadow-dark>
                 <template #tab-label-1>Tab 1</template>
                 <template #tab-panel-1>Tab 1</template>
@@ -20,20 +21,22 @@
             </co-tabs>
         </template>
     </co-card>
-</div> -->
+</div>
 
-<div class="block">
+<!-- <div class="block"> -->
 
-<co-tabs :tabs="3" :start-tab="1" :bg="hex.darkgrey" :inactive-color="hex.darkbg" shadow>
-    <template #tab-label-1>Tab 1</template>
+<!-- <co-tabs :tabs="3" :start-tab="1" :bg="hex.darkgrey" :inactive-color="hex.darkbg" shadow>
+    <template #tab-label-1>
+        <co-badge content="New!" :color="hex.emphasis_light" uppercase /> Tab 1
+    </template>
     <template #tab-panel-1>Tab 1</template>
     <template #tab-label-2>Tab 2</template>
     <template #tab-panel-2>Tab 2</template>
     <template #tab-label-3>Tab 3</template>
     <template #tab-panel-3>Tab 3</template>
-</co-tabs>
+</co-tabs> -->
 
- </div>
+ <!-- </div> -->
 
 </template>
 <script>
@@ -45,7 +48,7 @@ import hex from './../../utils/hex.utils'
 import CoTabs from './../co-tabs'
 import CoTitle from './../co-title'
 import CoBadge from './../co-badge'
-// import CoCard from './../co-card'
+import CoCard from './../co-card'
 
 export default defineComponent({
 
@@ -55,7 +58,7 @@ export default defineComponent({
         CoTabs,
         CoTitle,
         CoBadge,
-        // CoCard
+        CoCard
     },
 
     setup() {
