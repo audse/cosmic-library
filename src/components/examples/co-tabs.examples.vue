@@ -1,13 +1,8 @@
 <template>
     
-<div class="space-below">
-    <co-title h3 subtitle="co-tabs are a container for displaying sections of content." :classes="classes">
-        <co-badge left="<" content="co-tabs" right=" />" :color="hex.emphasis" />
-        co-tabs <span class="co-text-tint-1">component</span>
-    </co-title>
-</div>
+<examples component="co-tabs" subtitle="co-tabs are a container for displaying sections of content.">
 
-<div class="block space-below">
+    <!-- Examples -->
     <co-card :bg="hex.darkbg" shadow-dark no-spacer :classes="{ before: 'space-above' }">
         <template #before>
             <co-title h5 class="co-padding">
@@ -25,25 +20,56 @@
             </co-tabs>
         </template>
     </co-card>
-</div>
 
+    <!-- Slots -->
+    <template #slots>
+        <co-title h6 title="Required Slots" :classes="classes" />
 
-<div class="block space-above">
-    <co-tabs :tabs="2" :start-tab="1" :bg="hex.darkbg" shadow-dark>
-        <template #label-1>
-            <co-title h5 title="Slots" overline="co-tabs" subtitle="required" side :classes="classes" />
-        </template>
-        <template #label-2>
-            <co-title h5 title="Props" overline="co-tabs" subtitle="optional" side :classes="classes" />
-        </template>
-        <template #panel-1>
-            <co-title h6 title="Required Slots" :classes="classes" />
-        </template>
-        <template #panel-2>
-            <co-title h6 title="Required Props" :classes="classes" />
-        </template>
-    </co-tabs>
-</div>
+        <div class="textblock">
+            <co-badge left="#" content="label-n" :color="hex.white" />
+        </div>
+        <div class="textblock">
+            <co-badge left="#" content="panel-n" :color="hex.white" />
+        </div>
+    </template>
+
+    <!-- Props -->
+    <template #props>
+        <co-title h6 title="Required Props" :classes="classes" />
+
+        <div class="textblock">
+            <co-badge content="int" :color="hex.emphasis" />
+            <co-badge content="tabs" :color="hex.white" />
+        </div>
+
+        <co-title h6 title="Optional Props" :classes="classes" />
+
+        <div class="textblock">
+            <co-badge content="int" :color="hex.emphasis" />
+            <co-badge content="start-tab" :color="hex.white" />
+        </div>
+        <div class="textblock">
+            <co-badge content="string" :color="hex.emphasis" />
+            <co-badge content="bg" :color="hex.white" />
+        </div>
+        <div class="textblock">
+            <co-badge content="boolean" :color="hex.emphasis" />
+            <co-badge content="shadow" :color="hex.white" />
+            <co-badge content="shadow-light" :color="hex.white" />
+            <co-badge content="shadow-dark" :color="hex.white" />
+        </div>
+        <div class="textblock">
+            <co-badge content="boolean" :color="hex.emphasis" />
+            <co-badge content="less-round" :color="hex.white" />
+        </div>
+    </template>
+
+    <!-- Class Object -->
+    <template #classes>
+        ...
+    </template>
+
+</examples>
 
 
 </template>
@@ -53,6 +79,7 @@ import { defineComponent } from 'vue'
 
 import hex from './../../utils/hex.utils'
 
+import Examples from './examples'
 import CoTabs from './../co-tabs'
 import CoTitle from './../co-title'
 import CoBadge from './../co-badge'
@@ -63,6 +90,8 @@ export default defineComponent({
     name: 'co-tabs-examples',
 
     components: {
+        Examples,
+
         CoTabs,
         CoTitle,
         CoBadge,

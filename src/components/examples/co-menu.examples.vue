@@ -56,7 +56,7 @@
     </div>
     <div class="flex flex-right">
 
-        <co-menu :bg="darkgrey" right shadow-dark max-width="40vw" viewport-width>
+        <co-menu :bg="darkgrey" right shadow-dark max-width="300px" viewport-width>
             <co-button label="Click On Me!" :color="emphasis" :text-color="truewhite" filled lg />
             <template #toolbar-right>
                 <co-badge content="Important" :color="emphasis" uppercase />

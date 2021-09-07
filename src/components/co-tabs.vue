@@ -14,9 +14,6 @@
         
         <div v-for="tab in tabs" :key="`co-tabs-panel-${tab}`">
             <div v-show="current_tab===tab">
-                <div class="co-tabs-panel-before">
-                    <slot :name="`panel-${tab}-before`"></slot>
-                </div>
                 <div class="co-tabs-panel">
                     <slot :name="`panel-${tab}`"></slot>
                 </div>
@@ -44,8 +41,6 @@ export default defineComponent({
 
         bg: String,
 
-        inactiveColor: String,
-
         shadow: Boolean,
         shadowLight: Boolean,
         shadowDark: Boolean,
@@ -57,15 +52,12 @@ export default defineComponent({
         const class_list = computed( () => props.classes ? props.classes : {} )
 
         const border_radius = props.lessRound ? '1.5em' : '3.5em'
-        const inactive_color = computed( () => props.inactiveColor ? props.inactiveColor : props.bg )
 
         const current_tab = ref(props.startTab ? props.startTab : 1)
 
         return {
             class_list,
             border_radius,
-            inactive_color,
-
             current_tab
         }
         
