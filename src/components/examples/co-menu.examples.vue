@@ -6,7 +6,7 @@
     <div class="flex-align-center">
         <div class="flex">
 
-            <co-menu :bg="darkgrey" left hover shadow-dark viewport-width max-width="900px" :cols="3" :classes="{ before: 'co-bg-lightemphasis co-padding' }">
+            <co-menu :bg="darkgrey" :z-index="1000" left hover shadow-dark viewport-width max-width="900px" :cols="3" :classes="{ before: 'co-bg-lightemphasis co-padding' }">
                 <co-button label="Hover Over Me!" :color="emphasis" outline lg />
                 <template #toolbar>
                     <div class="flex-align-center">
@@ -15,7 +15,7 @@
                     </div>
                 </template>
                 <template #toolbar-right>
-                    <co-button label="toolbar-right" :color="emphasis" light sm :text-color="truewhite" />
+                    <co-button label="toolbar-right" :color="emphasis" light sm :label-color="truewhite" />
                 </template>
                 <template #before>
                     <co-badge content="Before" :color="emphasis" />
@@ -37,12 +37,12 @@
         </div>
         <div class="flex flex-center">
 
-            <co-menu bg="rgba(0,0,0,0.6)" center shadow-dark max-width="400px" viewport-width start-open :classes="{ menu: 'co-glass', before: 'co-center co-padding' }">
+            <co-menu bg="rgba(0,0,0,0.5)" arrow-overlap="2px" center shadow-dark max-width="400px" viewport-width :classes="{ menu: 'co-glass-light', before: 'co-center co-padding' }">
                 <co-button label="Click To Close!" :color="emphasis" subtle lg />
-                <template v-slot:before="{ co_menu }">
+                <template v-slot:before="{ coMenu }">
                     <co-title h4 title="Are you sure?" subtitle="Are you sure you want to do that action?" overline="Example" :classes="classes" />
                     <div class="co-padding">
-                        <co-button label="No, take me back" :color="emphasis" subtle  @click="co_menu.clicked_out()" />
+                        <co-button label="No, take me back" :color="emphasis" subtle  @click="coMenu.clicked_out()" />
                         <co-button label="Yes, continue" :color="emphasis" :textcolor="truewhite" filled />
                     </div>
                 </template>
@@ -52,7 +52,7 @@
         <div class="flex flex-right">
 
             <co-menu :bg="darkgrey" right shadow-dark max-width="300px" viewport-width>
-                <co-button label="Click On Me!" :color="emphasis" :text-color="truewhite" filled lg />
+                <co-button label="Click On Me!" :color="emphasis" :label-color="truewhite" filled lg />
                 <template #toolbar-right>
                     <co-badge content="Important" :color="emphasis" uppercase />
                 </template>
@@ -96,12 +96,12 @@
     <template #scoped>
 
         <p>
-            <co-badge content="co_menu" :color="emphasis" />
-            <co-badge left="co_menu." content="show_menu()" :color="white" />
-            <co-badge left="co_menu." content="mouse_enter()" :color="white" />
-            <co-badge left="co_menu." content="mouse_leave()" :color="white" />
-            <co-badge left="co_menu." content="clicked()" :color="white" />
-            <co-badge left="co_menu." content="clicked_out()" :color="white" />
+            <co-badge content="coMenu" :color="emphasis" />
+            <co-badge left="coMenu." content="show_menu()" :color="white" />
+            <co-badge left="coMenu." content="mouse_enter()" :color="white" />
+            <co-badge left="coMenu." content="mouse_leave()" :color="white" />
+            <co-badge left="coMenu." content="clicked()" :color="white" />
+            <co-badge left="coMenu." content="clicked_out()" :color="white" />
         </p>
 
     </template>
@@ -133,6 +133,13 @@
             This defines the location of the menu arrow.    
         </p>
 
+        <p>
+            <co-badge content="string" :color="emphasis" />
+            <co-badge content="arrow-overlap" :color="white" />
+
+            This defines how much the arrow overlaps the body of the menu- useful when using a border. Submit a value + unit such as <co-badge content="2px" />
+        </p>
+
         <co-title h6 title="All Props" :classes="classes" class="space-above" />
 
         <p>
@@ -151,7 +158,12 @@
             <co-badge content="string" :color="emphasis" />
             <co-badge content="height" :color="white" />
         </p>
+        <p>
+            <co-badge content="int" :color="emphasis" />
+            <co-badge content="z-index" :color="white" />
 
+            The default <co-badge content="z-index" /> is 1000: change this if your layout needs something else.
+        </p>
         <p>
             <co-badge content="boolean" :color="emphasis" />
             <co-badge content="left" :color="white" />
@@ -209,7 +221,10 @@
     <!-- Emits -->
     <template #emits>
         <p>
-            <co-badge content="co-menu-close" right="no props" :color="white" />
+            <co-badge content="coMenuOpened" right="no props" :color="white" />
+        </p>
+        <p>
+            <co-badge content="coMenuClosed" right="no props" :color="white" />
         </p>
     </template>
 
@@ -274,3 +289,11 @@ export default defineComponent({
 })
 
 </script>
+
+<style scoped>
+
+.top-of-stack {
+    z-index: 100;
+}
+
+</style>

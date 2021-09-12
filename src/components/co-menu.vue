@@ -1,66 +1,68 @@
 
 <template>
 
-<div v-show="show_clickarea" class="co-menu-clickout-area" @click="clicked_out" @keyup.esc="clicked_out" />
+<nav v-show="showClickArea" class="clickout-area" @click="clickedOut" @keyup.esc="clickedOut" @keyup.enter="clickedOut" tabindex="0" />
 
-<span class="co-menu-group" @mouseenter="mouse_enter" @mouseleave="mouse_leave" @click="clicked">
+<span :class="['group', classList.group]" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
 
-    <span ref="origin" class="co-menu-origin">
+    <span ref="origin" class="origin">
 
         <!-- Origin/Event Handler -->
-        <slot></slot>
+        <button @click="clicked" tabindex="0" @keyup.enter="clicked">
+            <slot></slot>
+        </button>
 
-        <div v-if="!reduceHoverArea && hover" class="co-menu-hover-area" />
+        <nav v-if="!reduceHoverArea && hover" class="hover-area" tabindex="0" @keyup.enter="mouseLeave" />
 
-        <div :class="['co-menu-container', right ? 'co-menu-container-right' : center ? 'co-menu-container-center' : 'co-menu-container-left']">
+        <section :class="['container', right ? 'container-right' : center ? 'container-center' : 'container-left']">
     
-            <transition name="co-menu">
-                <div v-show="show"  :class="['co-menu']">
-                    <div v-if="!noArrow" :class="['co-menu-triangle', class_list.arrow, right ? 'co-menu-triangle-right' : center ? 'co-menu-triangle-center' : 'co-menu-triangle-left' ]" />
+            <transition name="menu">
+                <section v-show="show" class="menu">
+                    <figure v-if="!noArrow" :class="['triangle', right ? 'triangle-right' : center ? 'triangle-center' : 'triangle-left', classList.arrow  ]" />
 
-                    <div class="co-menu-shift" :style="menu_shift">
-                        <div :class="['co-menu-bubble', class_list.menu, shadow ? 'co-menu-shadow' : shadowDark ? 'co-menu-shadow-dark' : shadowLight ? 'co-menu-shadow-light' : '']">
+                    <section class="shift" :style="menuShift">
+                        <article :class="['bubble', shadow ? 'shadow' : shadowDark ? 'shadow-dark' : shadowLight ? 'shadow-light' : '', classList.menu]">
 
                             <!-- Toolbar -->
-                            <div v-if="this.$slots.toolbar || this.$slots['toolbar-right']" :class="['co-menu-toolbar', class_list.toolbar]">
-                                <div v-if="this.$slots.toolbar" :class="['co-menu-toolbar-left', class_list.toolbar]">
-                                    <slot name="toolbar" :co_menu="co_menu"></slot>
-                                </div>
-                                <div v-if="this.$slots['toolbar-right']" class="co-menu-toolbar-right">
-                                    <slot name="toolbar-right" :co_menu="co_menu"></slot>
-                                </div>
-                            </div>
+                            <nav v-if="this.$slots.toolbar || this.$slots['toolbar-right']" :class="['toolbar', classList.toolbar]">
+                                <section v-if="this.$slots.toolbar" :class="['toolbar-left', classList.toolbar]">
+                                    <slot name="toolbar" :coMenu="coMenu"></slot>
+                                </section>
+                                <section v-if="this.$slots['toolbar-right']" class="toolbar-right">
+                                    <slot name="toolbar-right" :coMenu="coMenu"></slot>
+                                </section>
+                            </nav>
 
                             <!-- Spacer -->
-                            <div v-if="!this.$slots.toolbar && !this.$slots['toolbar-right'] && this.$slots.header" class="co-menu-spacer" />
+                            <div v-if="!this.$slots.toolbar && !this.$slots['toolbar-right'] && this.$slots.header" class="spacer" />
 
-                            <!-- Simple Main Content Block -->
-                            <div v-if="this.$slots.header" class="co-menu-header">
-                                <slot name="header" :co_menu="co_menu"></slot>
-                            </div>
+                            <!-- Header -->
+                            <header v-if="this.$slots.header" :class="[classList.header]">
+                                <slot name="header" :coMenu="coMenu"></slot>
+                            </header>
 
                             <!-- Before Content -->
-                            <div :class="['co-menu-before', class_list.before, only_before_content ? 'co-menu-before-only' : '']">
-                                <slot name="before" :co_menu="co_menu"></slot>
-                            </div>
+                            <section :class="['before', classList.before, onlyBefore ? 'before-only' : '']">
+                                <slot name="before" :coMenu="coMenu"></slot>
+                            </section>
 
                             <!-- Columns -->
-                            <div v-if="cols" :class="['co-menu-cols', class_list.cols]">
-                                <div v-for="col in cols" :key="`menu-col-${col}`" :class="['co-menu-col', class_list.col, !noColPadding ? 'co-menu-col-padding' : '']">
-                                    <slot :name="`col-${col}`" :co_menu="co_menu"></slot>                       
-                                </div>
-                            </div>
+                            <section v-if="cols" :class="['cols', classList.cols]">
+                                <aside v-for="col in cols" :key="`menu-col-${col}`" :class="['col', classList.col, classList[`col-${col}`], !noColPadding ? 'col-padding' : '']">
+                                    <slot :name="`col-${col}`" :coMenu="coMenu"></slot>                       
+                                </aside>
+                            </section>
 
                             <!-- Simple Main Content Block -->
-                            <div v-if="this.$slots.content" class="co-menu-content">
-                                <slot name="content" :co_menu="co_menu"></slot>
-                            </div>
+                            <main v-if="this.$slots.main" :class="[classList.main]">
+                                <slot name="content" :coMenu="coMenu"></slot>
+                            </main>
 
-                        </div>
-                    </div>
-                </div>
+                        </article>
+                    </section>
+                </section>
             </transition>
-        </div>
+        </section>
     </span>
 
 </span>
@@ -68,7 +70,7 @@
 </template>
 <script>
 
-import { defineComponent, watch, computed, ref } from 'vue'
+import { defineComponent, watch, computed, ref, reactive } from 'vue'
 
 export default defineComponent({
 
@@ -78,12 +80,17 @@ export default defineComponent({
 
         width: String,
         height: String,
+
+        zIndex: Number,
+
         viewportWidth: Boolean,
         maxWidth: String,
 
         left: Boolean,
         right: Boolean,
         center: Boolean,
+
+        arrowOverlap: String,
 
         startOpen: Boolean,
 
@@ -107,132 +114,134 @@ export default defineComponent({
 
     },
 
-    emits: ['co-menu-close'],
+    emits: ['coMenuOpened', 'coMenuClosed'],
 
     setup ( props, { slots, emit } ) {
 
-        const class_list = computed( () => {
-            if ( props.classes ) return Object.assign( {}, props.classes )
-            else return {}
-        })
+        const classList = reactive(  props.classes ? props.classes : {} )
 
-
-        const border_radius = computed( () => props.lessRound ? '1.5em' : '3.5em' )
+        const groupZIndex = computed( () => props.zIndex ? props.zIndex : 1000 )
+        const arrowOverlapValue = computed( () => props.arrowOverlap ? props.arrowOverlap : '0px')
+        const borderRadius = computed( () => props.lessRound ? '1.5em' : '3.5em' )
 
         // Calculates border radius based on the position of the arrow
-        const menu_radius = computed( () => {
+        const menuRadius = computed( () => {
             let radius = ''
             if ( props.left ) radius += ' 0'
-            else radius += ` ${border_radius.value}`
+            else radius += ` ${borderRadius.value}`
             if ( props.right ) radius += ' 0'
-            else radius += ` ${border_radius.value}`
-            radius += ` ${border_radius.value} ${border_radius.value}`
+            else radius += ` ${borderRadius.value}`
+            radius += ` ${borderRadius.value} ${borderRadius.value}`
             return radius
         })
 
-        const get_width_within_viewport = (origin) => {
+        const getWidthWithinViewport = (origin) => {
 
-            let new_width, viewport_to_element
+            let newWidth, viewportToElement
 
-            const half_element_width = 0.5 * ( origin.getBoundingClientRect().width )
-            const viewport_width = document.documentElement.clientWidth
+            const halfElementWidth = 0.5 * ( origin.getBoundingClientRect().width )
+            const viewportWidth = document.documentElement.clientWidth
             const padding = 32
 
             if ( props.left ) {
 
-                viewport_to_element = origin.getBoundingClientRect().left
-                new_width = viewport_width - ( viewport_to_element + half_element_width ) - padding
+                viewportToElement = origin.getBoundingClientRect().left
+                newWidth = viewportWidth - ( viewportToElement + halfElementWidth ) - padding
 
             } else if ( props.right ) {
 
-                viewport_to_element = origin.getBoundingClientRect().right
-                const viewport_to_element_left = viewport_width - viewport_to_element
+                viewportToElement = origin.getBoundingClientRect().right
+                const viewportToElementLeft = viewportWidth - viewportToElement
 
-                new_width = viewport_width - viewport_to_element_left - half_element_width - padding
+                newWidth = viewportWidth - viewportToElementLeft - halfElementWidth - padding
             }
 
             else if ( props.center ) {
 
-                new_width = viewport_width - ( 2 * padding )
+                newWidth = viewportWidth - ( 2 * padding )
 
             }
 
-            return new_width
+            return newWidth
 
         }
 
-        const menu_width = ref(props.width)
+        const menuWidth = ref(props.width)
 
-        const menu_shift = ref({})
+        const menuShift = ref({})
 
-        const max_width = computed( () => {
+        const maxWidth = computed( () => {
 
             if ( props.maxWidth ) {
 
-                let new_max_width = parseInt(props.maxWidth)
+                let newMaxWidth = parseInt(props.maxWidth)
                 const viewport = document.documentElement.clientWidth
 
                 if ( props.maxWidth.includes('vw') ) {
-                    new_max_width = new_max_width * (viewport/100)
+                    newMaxWidth = newMaxWidth * (viewport/100)
                 }
 
-                return new_max_width
+                return newMaxWidth
                 
             } else return 0
         })
 
         // When using a centered menu, the contents will occasionally go off-screen. This function
         // shifts the menu to fit on screen.
-        const get_menu_shift = (origin) => {
+        const getMenuShift = (origin) => {
 
-            const element_width = parseInt(menu_width.value)
-            const element_max_width = max_width.value
+            const elementWidth = parseInt(menuWidth.value)
+            const elementMaxWidth = maxWidth.value
 
-            const width = element_max_width === 0 ? element_width : element_width < element_max_width ? element_width : element_max_width
+            const width = elementMaxWidth === 0 ? elementWidth : elementWidth < elementMaxWidth ? elementWidth : elementMaxWidth
 
-            const viewport_to_element_left = origin.getBoundingClientRect().left
-            const viewport_to_element_right = origin.getBoundingClientRect().right
-            const viewport_to_element_center = ( ( viewport_to_element_right - viewport_to_element_left ) * 0.5 ) + viewport_to_element_left
+            const viewportToElementLeft = origin.getBoundingClientRect().left
+            const viewportToElementRight = origin.getBoundingClientRect().right
+            const viewportToElementCenter = ( ( viewportToElementRight - viewportToElementLeft ) * 0.5 ) + viewportToElementLeft
 
             // No need to shift the menu if it already fully fits in the viewport
-            if ( ( ( viewport_to_element_center + (width * 0.5) ) > document.documentElement.clientWidth ) || ( viewport_to_element_center - (width * 0.5) < 0 ) ) {
+            if ( ( ( viewportToElementCenter + (width * 0.5) ) > document.documentElement.clientWidth ) || ( viewportToElementCenter - (width * 0.5) < 0 ) ) {
                 
-                const viewport_shift_value = ( 32 - ( viewport_to_element_center - ( width * 0.5 ) ) )
-                const max_shift_value = ( width * 0.5 ) - 64 
+                const viewportShiftValue = ( 32 - ( viewportToElementCenter - ( width * 0.5 ) ) )
+                const maxShiftValue = ( width * 0.5 ) - 64 
 
-                let shift_value = Math.abs(viewport_shift_value) <= Math.abs(max_shift_value) ? viewport_shift_value : ( Math.sign(viewport_shift_value) * max_shift_value )
-                if ( Math.sign(shift_value) === 1 ) shift_value += 96
+                let shiftValue = Math.abs(viewportShiftValue) <= Math.abs(maxShiftValue) ? viewportShiftValue : ( Math.sign(viewportShiftValue) * maxShiftValue )
+                if ( Math.sign(shiftValue) === 1 ) shiftValue += 96
 
-                shift_value = ` ${shift_value}px`
+                shiftValue = ` ${shiftValue}px`
 
                 return {
                     position: 'absolute',
-                    left: shift_value
+                    left: shiftValue
                 }
             } else {
                 return {}
             }
         }
 
-        const to_show = ref(props.startOpen ? true : false)
+        const toShow = ref(props.startOpen ? true : false)
         const show = ref(props.startOpen ? true : false)
-        const show_clickarea = ref(props.startOpen ? true : false)
+        const showClickArea = ref(props.startOpen ? true : false)
 
-        // `to_show` is used to debounce the menu's opening and closing
+        // `toShow` is used to debounce the menu's opening and closing
         // This is to avoid stuttering
-        const show_menu = () => {
+        const showMenu = () => {
             return setTimeout( () => {
-                show.value = to_show.value
-                if ( !show.value ) emit ('co-menu-close')
+                show.value = toShow.value
+                if ( show.value ) {
+                    emit ('coMenuOpened')
+                } else {
+                    emit ('coMenuClosed')
+                }
             }, 100)
         }
 
         // Controls hover-to-open menus
-        const mouse_enter = () => {
-            if ( props.hover ) to_show.value = true
+        const mouseEnter = () => {
+            if ( props.hover ) toShow.value = true
         }
-        const mouse_leave = () => {
-            if ( props.hover ) to_show.value = false
+        const mouseLeave = () => {
+            if ( props.hover ) toShow.value = false
         }
 
         // Controls all menus: they are all click-to-open on touchscreen
@@ -240,82 +249,84 @@ export default defineComponent({
             if ( show.value ) {
                 
                 // If the click event was somewhere on the dropdown, we don't want to close it.
-                const path = event.path.findIndex( target => target.className && target.className.includes('co-menu-container') )
+                const path = event.path.findIndex( target => target.className && target.className.includes('menu') )
                 if ( path === -1 ) {
-                    to_show.value = false
-                    show_clickarea.value = false
+                    toShow.value = false
+                    showClickArea.value = false
                 }
 
             } else {
-                to_show.value = true
-                show_clickarea.value = true
+                toShow.value = true
+                showClickArea.value = true
             }
         }
 
-        const clicked_out = () => {
-            to_show.value = false
-            show_clickarea.value = false
+        const clickedOut = () => {
+            toShow.value = false
+            showClickArea.value = false
         }
 
-        const co_menu = {
-            show_menu,
-            mouse_enter,
-            mouse_leave,
+        const coMenu = {
+            showMenu,
+            mouseEnter,
+            mouseLeave,
             clicked,
-            clicked_out
+            clickedOut,
         }
 
-        watch(to_show, show_menu)
+        watch(toShow, showMenu)
 
-        const only_before_content = computed( () => {
-            if ( slots.before && Object.keys(slots).length === 2 ) return true
+        const onlyBefore = computed( () => {
+            if ( slots.before && slots.default && Object.keys(slots).length === 2 ) return true
             else return false
         })
 
         return {
-            class_list,
-            border_radius,
-            menu_radius,
+            classList,
+            groupZIndex,
+            arrowOverlapValue,
+            borderRadius,
+            menuRadius,
 
-            get_width_within_viewport,
-            menu_width,
-            menu_shift,
-            get_menu_shift,
+            getWidthWithinViewport,
+            menuWidth,
+            menuShift,
+            getMenuShift,
 
             show,
-            to_show,
-            show_clickarea,
+            toShow,
+            showClickArea,
 
-            mouse_enter,
-            mouse_leave,
+            mouseEnter,
+            mouseLeave,
             clicked,
-            clicked_out,
-            co_menu,
+            clickedOut,
+            coMenu,
 
-            only_before_content
+            onlyBefore
         }
     },
 
     mounted () {
 
         if ( this.viewportWidth ) {
-            this.menu_width = this.get_width_within_viewport(this.$refs.origin).toString()+'px'
+            this.menuWidth = this.getWidthWithinViewport(this.$refs.origin).toString()+'px'
 
             if ( this.center ) {
-                this.menu_shift = this.get_menu_shift(this.$refs.origin)
+                this.menuShift = this.getMenuShift(this.$refs.origin)
             }
         }
     },
 
     watch: {
 
-        to_show () {
+        toShow () {
             // Reset menu width and shift values every show/hide, in case of viewport changes
             if ( this.viewPortWidth ) {
-                this.menu_width = this.get_width_within_viewport(this.$refs.origin).toString()+'px'
+                this.menuWidth = this.getWidthWithinViewport(this.$refs.origin).toString()+'px'
 
                 if ( this.center ) {
-                    this.menu_shift = this.get_menu_shift(this.$refs.origin)
+                    this.menuShift = this.getMenuShift(this.$refs.origin)
                 }
             }
 
@@ -327,46 +338,79 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 
-.co-menu-container {
-    isolation: isolate;
-}
+* {
 
-.co-menu-container,
-.co-menu,
-.co-menu-content,
-.co-menu-group {
+    /* Box Model */
     box-sizing: border-box;
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    /* Sizing */
+    position: relative;
+    width: 100%;
+    height: auto;
 }
 
-.co-menu-group, .co-menu-origin {
+/* Button Reset */
+button {
+    border: 0;
+    outline: 0;
+    background: unset;
+    color: unset;
+    text-transform: unset;
+    font-weight: unset;
+    letter-spacing: unset;
+    font-size: unset;
+    font-family: unset;
+    display: inline;
+
+    &:focus-visible {
+        outline: auto;
+    }
+}
+
+.group {
+    /* Stacking */
+    isolation: isolate;
+    z-index: v-bind(groupZIndex);
+}
+
+.group, .origin {
     position: relative;
     width: inherit;
 }
 
-.co-menu-container {
+.container {
 
-    width: v-bind(menu_width);
-    max-width: v-bind(maxWidth);
+    /* Box Model */
     padding: 16px 0 0 0;
 
+    /* Positioning */
     position: absolute;
-    z-index: 1000;
+
+    /* Sizing */
+    width: v-bind(menuWidth);
+    max-width: v-bind(maxWidth);
+    
+    /* Stacking */
+    z-index: 10;
 }
 
-.co-menu-container-left {
+.container-left {
     left: 50%;
 }
 
-.co-menu-container-right {
+.container-right {
     right: 50%;
 }
 
-.co-menu-container-center {
+.container-center {
     left: 50%;
     transform: translate(-50%, 0);
 }
 
-.co-menu-hover-area {
+.hover-area {
 
     /* Positioning */
     position: absolute;
@@ -380,7 +424,18 @@ export default defineComponent({
     height: 150%;
 }
 
-.co-menu-clickout-area {
+/* When focusing (accessibility), increase the hover area so that the menu won't stutter */
+button:focus-visible {
+    .hover-area {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.clickout-area {
     position: fixed;
     top: 0;
     left: 0;
@@ -389,11 +444,11 @@ export default defineComponent({
 }
 
 
-.co-menu {
+.menu {
 
     display: block;
 
-    width: v-bind(menu_width);
+    width: v-bind(menuWidth);
     max-width: v-bind(maxWidth);
     height: v-bind(height);
 
@@ -401,17 +456,17 @@ export default defineComponent({
     
 }
 
-.co-menu-shift {
+.shift {
 
     min-height: 8em;
-    width: v-bind(menu_width);
+    width: v-bind(menuWidth);
     max-width: v-bind(maxWidth);
 }
 
-.co-menu-bubble {
+.bubble {
 
-    background: v-bind(bg);
-    border-radius: v-bind(menu_radius);
+    background-color: v-bind(bg);
+    border-radius: v-bind(menuRadius);
 
     display: block;
     box-sizing: border-box;
@@ -419,147 +474,183 @@ export default defineComponent({
     position: relative;
 
     min-height: 8em;
-    width: v-bind(menu_width);
+    width: v-bind(menuWidth);
     max-width: v-bind(maxWidth);
     height: v-bind(height);
     margin-bottom: 2em;
     margin-right: 2em;
-    z-index: 101;
+    z-index: 1;
 }
 
-.co-menu-before-only {
-    width: v-bind(menu_width);
-    max-width: v-bind(maxWidth);
-    border-radius: v-bind(menu_radius);
-    height: v-bind(height);
-    min-height: 8em;
-    box-sizing: border-box;
+/*
+*
+* TRIANGLE/ARROW
+*
+*/
+
+/* Figure Reset */
+figure {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
 }
 
-.co-menu-toolbar {
-    display: flex;
-    align-items: center;
-    padding: 1.75em 1.5em 0.25em 1.5em;
-    box-sizing: border-box;
-}
+.triangle {
 
-.co-menu-toolbar-left {
-    flex: 1 auto;
-    align-self: center;
-    text-align: left;
-}
-
-.co-menu-toolbar-right {
-    flex: 1 auto;
-    align-self: center;
-    text-align: right;
-    margin-left: 1.5em;
-}
-
-.co-menu-cols {
-    position: relative;
-    display: flex;
-    box-sizing: border-box;
-    height: 100%;
-    min-height: 8em;
-}
-
-.co-menu-col {
-    flex: 1 auto;
-    box-sizing: border-box;
-}
-
-.co-menu-col-padding {
-    
-    padding: 0.25em 0.25em 2em 0.25em;
-
-    &:first-of-type {
-        padding-left: 2em;
-    }
-
-    &:last-of-type {
-        padding-right: 1em;
-    }
-}
-
-
-.co-menu-shadow-light {
-    box-shadow: 0px 5px 25px -20px rgba(0, 0, 0, 0.15);
-}
-
-.co-menu-shadow {
-    box-shadow: 0px 5px 25px -20px rgba(0, 0, 0, 0.3);
-}
-
-.co-menu-shadow-dark {
-    box-shadow: 0px 10px 30px -20px rgba(0, 0, 0, 0.7);
-}
-
-.co-menu-content {
-
-    padding: 0 2.5em 2em 1.5em;
-    text-align: left;
-
-}
-
-.co-menu-header {
-
-    padding: 0 2.5em 2em 1.5em;
-    text-align: left;
-
-}
-
-.co-menu-spacer {
-    padding: 2em;
-}
-
-.co-menu-triangle {
-    width: 0;
-    height: 0;
+    /* Box Model */
+    display: inline-block;
     border-style: solid;
 
+    /* Styling */
+    color: transparent !important;
+    background: transparent !important;
+    background-color: transparent !important;
+
+    /* Positioning */
     position: absolute;
-    top: -29px;
-    z-index: 102;
+    top: calc( -32px + v-bind(arrowOverlapValue) );
+    z-index: 2;
+
+    /* Sizing */
+    width: 0;
+    height: 0;
+
 }
 
-.co-menu-triangle-left {
+.triangle-left {
+    left: 0;
     border-width: 0 32px 32px 0px;
     border-color: transparent transparent v-bind(bg) transparent;
 }
 
-.co-menu-triangle-right {
+.triangle-right {
     right: 0;
     border-width: 0 0 32px 32px;
     border-color: transparent transparent v-bind(bg) transparent;
 }
 
-.co-menu-triangle-center {
+.triangle-center {
     left: 50%;
     transform: translate(-50%, 0);
     border-width: 0 32px 32px 32px;
     border-color: transparent transparent v-bind(bg) transparent;
 }
 
-.co-menu-enter-active,
-.co-menu-leave-active {
-    transition: 250ms ease;
+.shadow-light {
+    box-shadow: 0px 5px 25px -20px rgba(0, 0, 0, 0.15);
+}
 
-    .co-menu {
-        transition: 150ms ease;
-        transform: scaleY(100%);
-        transform-origin: top;
+.shadow {
+    box-shadow: 0px 5px 25px -20px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-dark {
+    box-shadow: 0px 10px 30px -20px rgba(0, 0, 0, 0.7);
+}
+
+/*
+*
+* SLOTS
+*
+*/
+
+.spacer {
+    padding: 2em;
+}
+
+// Before
+.before-only {
+    width: v-bind(menuWidth);
+    max-width: v-bind(maxWidth);
+    border-radius: v-bind(menuRadius);
+    height: v-bind(height);
+    min-height: 8em;
+    box-sizing: border-box;
+}
+
+// Top Toolbar
+.toolbar {
+    display: flex;
+    align-items: center;
+    padding: 1.75em 1.5em 0.25em 1.5em;
+    box-sizing: border-box;
+}
+.toolbar-left {
+    flex: 1 auto;
+    align-self: center;
+    text-align: left;
+}
+.toolbar-right {
+    flex: 1 auto;
+    align-self: center;
+    text-align: right;
+    margin-left: 1.5em;
+}
+
+// Columns Layout
+.cols {
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    height: 100%;
+    min-height: 8em;
+}
+.col {
+    flex: 1 auto;
+    box-sizing: border-box;
+}
+.col-padding {
+    padding: 0.25em 0.25em 2em 0.25em;
+
+    &:first-of-type {
+        padding-left: 2em;
+    }
+    &:last-of-type {
+        padding-right: 1em;
     }
 }
 
-.co-menu-enter-from,
-.co-menu-leave-to {
+// Header Slot
+header {
+    padding: 0 2.5em 2em 1.5em;
+    text-align: left;
+}
+
+// Main Simple Content Slot
+main {
+    padding: 0 2.5em 2em 1.5em;
+    text-align: left;
+}
+
+
+.menu-enter-active,
+.menu-leave-active {
+    transition: 250ms ease;
+
+    section.menu {
+        transition: 150ms esase;
+        transform: scaleY(100%);
+        transform-origin: top;
+
+        figure {
+            transform: scale(100%);
+        }
+    }
+}
+
+.menu-enter-from,
+.menu-leave-to {
     transform: translateY(-0.75em);
     opacity: 0;
 
-    .co-menu {
+    section.menu {
         transform: scaleY(75%);
         transform-origin: top;
+
+        figure {
+            transform: scale(100%);
+        }
     }
 }
 

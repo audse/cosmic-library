@@ -1,6 +1,7 @@
 
 @import 'cosmic.variables';
 @import 'cosmic.utils';
+
 @import 'include-media';
 @import 'icons';
 
@@ -25,7 +26,7 @@ article {
 }
 
 section {
-    display: flex;
+    display: block;
     width: 100%;
     flex: none;
 }

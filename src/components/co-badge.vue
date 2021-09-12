@@ -1,19 +1,19 @@
 <template>
     
-<span :style="style" :class="['co-badge', uppercase ? 'co-badge-uppercase' : '', lg ? 'co-badge-size-lg' : sm ? 'co-badge-size-sm' : 'co-badge-size-md']">
+<span :class="[classList.badge, uppercase ? 'uppercase' : '', lg ? 'lg' : sm ? 'sm' : 'md', noWrap ? 'no-wrap' : '']">
 
-    <span class="co-badge-aside">
+    <aside v-if="this.$slots.left" :class="classList.left">
         {{ left }}
         <slot name="left"></slot>
-    </span>
+    </aside>
 
     {{ content }}
     <slot></slot>
 
-    <span class="co-badge-aside">
+    <aside v-if="this.$slots.right" :class="classList.right">
         {{ right }}
         <slot name="right"></slot>
-    </span>
+    </aside>
 </span>
 
 </template>
@@ -28,10 +28,14 @@ export default defineComponent({
     props: {
         content: String,
 
-        left: String,
-        right: String,
+        classes: Object,
 
+        noWrap: Boolean,
+
+        filled: Boolean,
+        subtle: Boolean,
         color: String,
+        labelColor: String,
 
         lg: Boolean,
         sm: Boolean,
@@ -41,20 +45,21 @@ export default defineComponent({
 
     setup ( props ) {
 
-        const change_alpha = (color, opacity) => {
-            const new_opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-            return color + new_opacity.toString(16).toUpperCase();
+        const classList = reactive( props.classes ? props.classes : {} )
+
+        const changeOpacity = (color, opacity) => {
+            const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+            return color + newOpacity.toString(16).toUpperCase();
         }
 
-        const new_color = computed( () => props.color ? change_alpha(props.color, 0.25) : 'rgba(0, 0, 0, 0.15)' )
+        const backgroundColor = computed( () => props.subtle ? 'transparent' : props.filled && props.labelColor ? props.color : props.color ? changeOpacity(props.color, 0.25) : 'rgba(0, 0, 0, 0.15)' )
 
-        const style = reactive({
-            color: props.color,
-            background: new_color.value
-        })
+        const textColor = computed( () => props.labelColor ? props.labelColor : props.color )
 
         return {
-            style
+            classList,
+            backgroundColor,
+            textColor
         }
     }
 
@@ -64,45 +69,52 @@ export default defineComponent({
 
 <style scoped>
 
-.co-badge {
+* {
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+span {
 
     /* Background */
     border-radius: 1em;
+    background-color: v-bind(backgroundColor);
+    color: v-bind(textColor);
 
     /* Text */
     letter-spacing: 0.5px;
-
-    /* Positioning */
-    display: inline-block;
 
     /* Spacing */
     margin: 0.15em 0.25em;
     padding: 0.2em 0.75em;
 
     /* Sizing */
-    width: fit-content;
-    min-width: max-content;
     height: fit-content;
+    max-height: fit-content;
 }
 
-.co-badge-aside {
-    display: inline;
+aside {
     opacity: 0.5;
 }
 
-.co-badge-size-lg {
+.no-wrap {
+    width: fit-content;
+    min-width: max-content;
+}
+
+.lg {
     font-size: 1em;
 }
 
-.co-badge-size-md {
+.md {
     font-size: 0.75em;
 }
 
-.co-badge-size-sm {
+.sm {
     font-size: 0.6em;
 }
 
-.co-badge-uppercase {
+.uppercase {
     text-transform: uppercase;
 }
 

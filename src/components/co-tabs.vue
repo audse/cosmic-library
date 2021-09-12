@@ -1,33 +1,31 @@
 <template>
     
-<div :class="['co-tabs-container']">
+<section class="container">
 
     <!-- Tab Labels -->
-    <div :class="['co-tabs-labels']">
-        <div v-for="tab in tabs" :key="`co-tabs-label-${tab}`" :class="['co-tabs-label', tab===current_tab ? 'co-tabs-label-active' : '']" @click="current_tab=tab">
-            <label :for="`Tab ${tab}`"><slot :name="`label-${tab}`"></slot></label>
-        </div>
-    </div>
+    <nav :class="['labels']">
+        <label v-for="tab in tabs" :key="`label-${tab}`" :class="[tab===current_tab ? 'label-active' : '']" @click="current_tab=tab" @keyup.enter="current_tab=tab" tabindex="0">
+            <span :for="`Tab ${tab}`"><slot :name="`label-${tab}`"></slot></span>
+        </label>
+    </nav>
 
     <!-- Tab Panel -->
-    <div :class="['co-tabs-panels', shadow ? 'co-tabs-shadow' : shadowLight ? 'co-tabs-shadow-light' : shadowDark ? 'co-tabs-shadow-dark' : '']">
+    <main :class="[shadow ? 'shadow' : shadowLight ? 'shadow-light' : shadowDark ? 'shadow-dark' : '']">
         
-        <div v-for="tab in tabs" :key="`co-tabs-panel-${tab}`">
-            <div v-show="current_tab===tab">
-                <div class="co-tabs-panel">
-                    <slot :name="`panel-${tab}`"></slot>
-                </div>
-            </div>
-        </div>
+        <section v-for="tab in tabs" :key="`panel-${tab}`">
+            <section v-show="current_tab===tab" class="panel">
+                <slot :name="`panel-${tab}`"></slot>
+            </section>
+        </section>
 
-    </div>
+    </main>
 
-</div>
+</section>
 
 </template>
 
 <script>
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, ref, reactive } from 'vue'
 
 export default defineComponent({
 
@@ -49,7 +47,7 @@ export default defineComponent({
 
     setup ( props ) {
 
-        const class_list = computed( () => props.classes ? props.classes : {} )
+        const class_list = reactive( props.classes ? props.classes : {} )
 
         const border_radius = props.lessRound ? '1.5em' : '3.5em'
 
@@ -68,22 +66,31 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 
-.co-tabs-container {
+* {
+    box-sizing: border-box;
+}
+
+section.container {
 
     width: 100%;
+    flex: none;
+    display: block;
     overflow-x: hidden;
     position: relative;
     isolation: isolate;
 
+    margin: 0;
+    padding: 0;
+
 }
 
-.co-tabs-labels {
+nav {
     display: flex;
     justify-content: center;
     z-index: 1;
 }
 
-.co-tabs-label {
+label {
 
     position: relative;
     cursor: pointer;
@@ -106,7 +113,7 @@ export default defineComponent({
         margin-left: 0;
     }
 
-    label {
+    span {
         cursor: pointer;
         opacity: 0.75;
 
@@ -119,13 +126,13 @@ export default defineComponent({
 
 }
 
-.co-tabs-label-active {
+.label-active {
     background: v-bind(bg);
     opacity: 1;
     z-index: 2;
     width: 120%;
 
-    label {
+    span {
         opacity: 1;
     }
 
@@ -136,7 +143,7 @@ export default defineComponent({
     }
 }
 
-.co-tabs-panels {
+main {
     background: v-bind(bg);
     border-radius: v-bind(border_radius);
     margin-top: calc( -1 * v-bind(border_radius) );
@@ -144,84 +151,21 @@ export default defineComponent({
     z-index: 10;
 }
 
-.co-tab-panel-before {
-
-}
-
-.co-tabs-panel {
-    padding: calc( v-bind(border_radius) - 1em ) 1.5em;
+section.panel {
+    padding: v-bind(border_radius) 1.5em;
     z-index: 10;
 
 }
 
-
-// .co-tabs-label:before,
-// .co-tabs-label:after {
-//     z-index: -1;
-//     content: "";
-//     position: absolute;
-
-//     height: 12px;
-//     width: 24px;
-
-//     bottom: 0;
-//     transition: 200ms;
-// }
-
-// .co-tabs-label:after {
-//     right: -24px;
-
-//     border-radius: 0 0 0 12px;
-//     -moz-border-radius: 0 0 0 12px;
-//     -webkit-border-radius: 0 0 0 12px;
-
-//     -webkit-box-shadow: -12px 0 0 0 v-bind(inactive_color);
-//     box-shadow: -12px 0 0 0 v-bind(inactive_color);
-// }
-
-// .co-tabs-label:before {
-//     left: -24px;
-
-//     border-radius: 0 0 12px 0;
-//     -moz-border-radius: 0 0 12px 0;
-//     -webkit-border-radius: 0 0 12px 0;
-
-//     -webkit-box-shadow: 12px 0 0 0 v-bind(inactive_color);
-//     box-shadow: 12px 0 0 0 v-bind(inactive_color);
-// }
-
-// .co-tabs-label-active:after {
-//     right: -24px;
-
-//     border-radius: 0 0 0 12px;
-//     -moz-border-radius: 0 0 0 12px;
-//     -webkit-border-radius: 0 0 0 12px;
-
-//     -webkit-box-shadow: -12px 0 0 0 v-bind(bg);
-//     box-shadow: -12px 0 0 0 v-bind(bg);
-// }
-
-// .co-tabs-label-active:before {
-//     left: -24px;
-
-//     border-radius: 0 0 12px 0;
-//     -moz-border-radius: 0 0 12px 0;
-//     -webkit-border-radius: 0 0 12px 0;
-
-//     -webkit-box-shadow: 12px 0 0 0 v-bind(bg);
-//     box-shadow: 12px 0 0 0 v-bind(bg);
-// }
-
-
-.co-tabs-shadow-light {
+.shadow-light {
     box-shadow: 0px 5px 25px -20px rgba(0, 0, 0, 0.15);
 }
 
-.co-tabs-shadow {
+.shadow {
     box-shadow: 0px 5px 25px -20px rgba(0, 0, 0, 0.4);
 }
 
-.co-tabs-shadow-dark {
+.shadow-dark {
     box-shadow: 0px 10px 30px -20px rgba(0, 0, 0, 0.7);
 }
 

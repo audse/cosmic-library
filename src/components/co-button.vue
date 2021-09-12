@@ -1,18 +1,18 @@
 <template>
     
-    <div class="co-button-container">
-    <button :class="class_list" :type="type ? type : 'submit'">
-        <div class="co-button-label">
+<button :class="classList.container">
+    <label :class="classList.button" :type="type ? type : 'submit'">
+        <span>
         {{ label }}
         <slot></slot>
-        </div>
-    </button>   
-    </div>
+        </span>
+    </label>   
+</button>
 
 </template>
 <script>
 
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, reactive } from 'vue'
 
 export default defineComponent({
 
@@ -24,7 +24,7 @@ export default defineComponent({
         classes: String,
 
         color: String,
-        textColor: String,
+        labelColor: String,
 
         uppercase: Boolean,
 
@@ -41,44 +41,49 @@ export default defineComponent({
 
     setup ( props ) {
 
-        const class_list = computed( () => {
-            let string = 'co-button'
+        const classList = reactive({
 
-            if ( props.classes ) string += ` ${props.classes}`
+            button: computed( () => {
+                let string = ''
 
-            if ( props.uppercase ) string += ' co-button-uppercase'
+                if ( props.classes ) string += ` ${props.classes}`
 
-            if ( props.filled ) string += ' co-button-filled co-button-ripple-filled'
-            if ( props.subtle ) string += ' co-button-subtle co-button-ripple-subtle'
-            if ( props.light ) string += ' co-button-light co-button-ripple-light'
-            if ( props.outline ) string += ' co-button-outline co-button-ripple-outline'
+                if ( props.uppercase ) string += ' uppercase'
 
-            if ( props.round ) string += props.sm ? ' co-button-round-sm' : props.lg ? ' co-button-round-lg' : ' co-button-round'
+                if ( props.filled ) string += ' filled ripple-filled'
+                if ( props.subtle ) string += ' subtle ripple-subtle'
+                if ( props.light ) string += ' light ripple-light'
+                if ( props.outline ) string += ' outline ripple-outline'
 
-            if ( props.sm ) string += ' co-button-sm'
-            if ( props.lg ) string += ' co-button-lg'
+                if ( props.round ) string += props.sm ? ' round-sm' : props.lg ? ' round-lg' : ' round'
 
-            return string
+                if ( props.sm ) string += ' sm'
+                if ( props.lg ) string += ' lg'
+
+                return string
+            })
         })
+
+       
         
-        const change_alpha = (color, opacity) => {
-            const new_opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-            return color + new_opacity.toString(16).toUpperCase();
+        const changeOpacity = (color, opacity) => {
+            const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+            return color + newOpacity.toString(16).toUpperCase();
         }
 
-        const color_25 = computed( () => props.color ? change_alpha(props.color, 0.25) : 'rgba(0, 0, 0, 0.15)' )
-        const color_50 = computed( () => props.color ? change_alpha(props.color, 0.50) : 'rgba(0, 0, 0, 0.15)' )
+        const colorOpacity25 = computed( () => props.color ? changeOpacity(props.color, 0.25) : 'rgba(0, 0, 0, 0.15)' )
+        const colorOpacity50 = computed( () => props.color ? changeOpacity(props.color, 0.50) : 'rgba(0, 0, 0, 0.15)' )
 
-        const text_color = props.textColor ? props.textColor : props.subtle || props.outline ? props.color : 'inherit'
-        const background_color = props.filled ? props.color : props.light ? color_25.value : 'transparent'
-        const border = props.outline ? `2px solid ${color_50.value}` : 'none'
+        const textColor = props.labelColor ? props.labelColor : props.subtle || props.outline ? props.color : 'inherit'
+        const backgroundColor = props.filled ? props.color : props.light ? colorOpacity25.value : 'transparent'
+        const border = props.outline ? `2px solid ${colorOpacity50.value}` : 'none'
 
         return {
-            class_list,
-            text_color,
-            background_color,
-            color_25,
-            color_50,
+            classList,
+            textColor,
+            backgroundColor,
+            colorOpacity25,
+            colorOpacity50,
             border,
         }
 
@@ -90,13 +95,12 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 
-button,
-.co-button-container,
-.co-button {
+* {
     box-sizing: border-box;
     z-index: 1;
 }
 
+/* Button Reset */
 button {
     border: 0;
     outline: 0;
@@ -110,7 +114,8 @@ button {
     display: inline;
 }
 
-.co-button-container {
+/* Button Styles */
+button {
     
     /* Background */
     border-radius: 1.25em;
@@ -124,14 +129,26 @@ button {
 
     /* Sizing */
     width:  fit-content;
+
+    &:hover {
+        transform: translate(0, -1px);
+        opacity: 0.9;
+        transition: 200ms;
+        z-index: 1;
+    }
+
+    /* Allow outline when focusing using tab (for accessibility) */
+    &:focus-visible {
+        outline: auto;
+    }
 }
 
-.co-button {
+label {
 
     /* Styles */
     border: v-bind(border);
-    background-color: v-bind(background_color);
-    color: v-bind(text_color);
+    background-color: v-bind(backgroundColor);
+    color: v-bind(textColor);
 
     /* Background */
     border-radius: 1.25em;
@@ -151,16 +168,9 @@ button {
     width: fit-content;
 }
 
-.co-button-container:hover {
-    transform: translate(0, -1px);
-    opacity: 0.9;
-    transition: 200ms;
-    z-index: 1;
-}
+.round, .round-sm, .round-lg {
 
-.co-button-round, .co-button-round-sm, .co-button-round-lg {
-
-    .co-button-label {
+    span {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -168,72 +178,72 @@ button {
     }
 }
 
-.co-button-round {
+.round {
     width: 2.25em;
     height: 2.25em;
 }
 
-.co-button-round-sm {
+.round-sm {
     width: 1.75em;
     height: 1.75em;
 }
 
-.co-button-round-lg {
+.round-lg {
     width: 3em;
     height: 3em;
     border-radius: 1.5em;
 }
 
-.co-button-sm {
+.sm {
     font-size: 0.75rem;
     padding: 0.4em 0.75em;
     border-width: 1px;
 }
 
-.co-button-lg {
+.lg {
     font-size: 1rem;
     padding: 0.5em 0.75em;
 }
 
-.co-button-uppercase {
+.uppercase {
     text-transform: uppercase;
 }
 
-.co-button-ripple-filled, .co-button-ripple-subtle, .co-button-ripple-light, .co-button-ripple-outline {
+.ripple-filled, .ripple-subtle, .ripple-light, .ripple-outline {
     background-position: center;
     transition: background 800ms;
     z-index: 1;
 }
 
-.co-button-ripple-filled:hover {
-    background: v-bind(background_color) radial-gradient(circle, transparent 1%, v-bind(background_color) 1%) center/15000%;
+.ripple-filled:hover {
+    background: v-bind(backgroundColor) radial-gradient(circle, transparent 1%, v-bind(backgroundColor) 1%) center/15000%;
     background-blend-mode: screen;
 }
 
-.co-button-ripple-filled:active {
-    background-color: v-bind(background_color);
+.ripple-filled:active {
+    background-color: v-bind(backgroundColor);
     background-size: 100%;
     transition: background 0s;
 }
 
-.co-button-ripple-subtle:hover, .co-button-ripple-outline:hover {
-    background: v-bind(color_25) radial-gradient(circle, transparent 1%, v-bind(color_25) 1%) center/15000%;
+.ripple-subtle:hover, .ripple-outline:hover {
+    background: v-bind(colorOpacity25) radial-gradient(circle, transparent 1%, v-bind(colorOpacity25) 1%) center/15000%;
     background-blend-mode: screen;
 }
 
-.co-button-ripple-subtle:active, .co-button-ripple-outline:active {
-    background-color: v-bind(background_color);
+.ripple-subtle:active, .ripple-outline:active {
+    background-color: v-bind(backgroundColor);
     background-size: 100%;
     transition: background 0s;
 }
 
-.co-button-ripple-light:hover {
-    background: v-bind(color_50) radial-gradient(circle, transparent 1%, v-bind(color_50) 1%) center/15000%;
+.ripple-light:hover {
+    background: v-bind(colorOpacity50) radial-gradient(circle, transparent 1%, v-bind(colorOpacity50) 1%) center/15000%;
     background-blend-mode: screen;
 }
 
-.co-button-ripple-light:active {
-    background-color: v-bind(background_color);
+.ripple-light:active {
+    background-color: v-bind(backgroundColor);
     background-size: 100%;
     transition: background 0s;
 }

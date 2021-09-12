@@ -33,19 +33,29 @@
         </template>
 
         <template #panel-1>
-            <slot name="slots"></slot>
+            <section>
+                <slot name="slots"></slot>
+            </section>
         </template>
         <template #panel-2>
-            <slot name="scoped"></slot>
+            <section>
+                <slot name="scoped"></slot>
+            </section>
         </template>
         <template #panel-3>
-            <slot name="props"></slot>
+            <section>
+                <slot name="props"></slot>
+            </section>
         </template>
         <template #panel-4>
-            <slot name="emits"></slot>
+            <section>
+                <slot name="emits"></slot>
+            </section>
         </template>
         <template #panel-5>
-            <slot name="classes"></slot>
+            <section>
+                <slot name="classes"></slot>
+            </section>
         </template>
     </co-tabs>
 </div>

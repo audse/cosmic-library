@@ -10,6 +10,7 @@
     <co-badge left="<" content="co-title" right=" />" :color="emphasis" /><br />
     <co-badge left="<" content="co-button" right=" />" :color="emphasis" /><br />
     <co-badge left="<" content="co-badge" right=" />" :color="emphasis" /><br />
+    <co-badge left="<" content="co-avatar" right=" />" :color="emphasis" /><br />
 
     <co-title h6 title="layout" overline="components" :classes="title_classes" />
     <co-badge left="<" content="co-card" right=" />" :color="emphasis" /><br />

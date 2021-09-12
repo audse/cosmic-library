@@ -1,32 +1,32 @@
 <template>
 
-<div :class="['co-title', class_list.title_group, inline ? 'co-title-inline' : '']">
-    <div :class="['co-title-title', class_list.title]">
+<header :class="[classList.titleGroup, inline ? 'inline' : '']">
+    <main :class="[classList.title]">
 
-        <div :class="['co-title-overline', class_list.overline]">
+        <strong :class="[classList.overline]">
             {{ overline }}
             <slot name="overline"></slot>
-        </div>
+        </strong>
 
         {{ title }}
 
         <slot></slot>
 
-        <span v-if="side" :class="['co-title-subtitle co-title-subtitle-side', class_list.subtitle]">
+        <aside v-if="side" :class="[classList.subtitle]">
             {{ subtitle }}
             <slot name="subtitle-side"></slot>
-        </span>
+        </aside>
         
-    </div>
-    <div v-if="!side" :class="['co-title-subtitle', class_list.subtitle]">
+    </main>
+    <p v-if="!side" :class="[classList.subtitle]">
         {{ subtitle }}
         <slot name="subtitle"></slot>
-    </div>
-</div>
+    </p>
+</header>
 
 </template>
 <script>
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, reactive } from 'vue'
 
 export default defineComponent({
 
@@ -53,18 +53,19 @@ export default defineComponent({
 
     setup ( props ) {
         
-        const class_list = computed( () => props.classes ? Object.assign({}, props.classes) : {} )
+        const classList = reactive( props.classes ? props.classes : {} )
 
-        const font_size = computed( () => {
+        const titleFontSize = computed( () => {
             if ( props.h1 ) return '3rem'
-            if ( props.h2 ) return '2rem'
-            if ( props.h3 ) return '1.5rem'
-            if ( props.h4 ) return '1.25rem'
-            if ( props.h5 ) return '1.2rem'
-            else return '1.1rem'
+            else if ( props.h2 ) return '2rem'
+            else if ( props.h3 ) return '1.5rem'
+            else if ( props.h4 ) return '1.25rem'
+            else if ( props.h5 ) return '1.2rem'
+            else if ( props.h6 ) return '1.1rem'
+            else return '1rem'
         })
 
-        const line_height = computed( () => {
+        const lineHeight = computed( () => {
             if ( props.h1 ) return '1'
             if ( props.h2 ) return '1.1'
             if ( props.h3 ) return '1.2'
@@ -73,25 +74,25 @@ export default defineComponent({
             else return '1.3'
         })
 
-        const subtitle_font_size = computed( () => {
+        const subtitleFontSize = computed( () => {
             if ( props.h1 ) return '0.6em'
             if ( props.h2 ) return '0.7em'
             if ( props.h5 ) return '0.9em'
-            if ( props.h6 ) return '1em'
+            if ( props.h6 ) return '0.95em'
             else return '0.8em'
         })
 
-        const font_weight = computed( () => {
+        const fontWeight = computed( () => {
             if ( props.h6 ) return '500'
             else return '600'
         })
 
         return {
-            class_list,
-            font_size,
-            line_height,
-            subtitle_font_size,
-            font_weight
+            classList,
+            titleFontSize,
+            lineHeight,
+            subtitleFontSize,
+            fontWeight
         }
     }
 
@@ -100,49 +101,54 @@ export default defineComponent({
 </script>
 <style scoped>
 
-.co-title-inline {
-    display: inline-block;
-}
-
-.co-title, .co-title-overline, .co-title-subtitle, .co-title-title {
-    max-width: 100%;
+* {
     box-sizing: border-box;
+    max-width: 100%;
+    display: block;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
 }
 
-.co-title {
-    font-size: v-bind(font_size);
+header {
+    font-size: v-bind(titleFontSize);
 }
 
-.co-title-overline {
-
-    font-size: 0.7em;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    
+header.inline {
+    display: inline-block;
+    width: fit-content;
 }
 
-.co-title-title {
-
+/* Title */
+main {
     font-size: 1em;
-    font-weight: v-bind(font_weight);
-    line-height: v-bind(line_height);
+    font-weight: v-bind(fontWeight);
+    line-height: v-bind(lineHeight);
     letter-spacing: -0.015em;
 
     padding: 1em 0 0.25em 0;
 }
 
-.co-title-subtitle {
-    
-    font-size: v-bind(subtitle_font_size);
+/* Subtitle */
+p, aside {
+    font-size: v-bind(subtitleFontSize);
     font-weight: 500;
-    line-height: v-bind(line_height);
+    line-height: v-bind(lineHeight);
 
     padding: 0.25em 0;
-
 }
 
-.co-title-subtitle-side {
+/* Subtitle (side) */
+aside {
     margin-left: 0.25em;
+}
+
+/* Overline */
+strong {
+    font-size: 0.7em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: v-bind(fontWeight);
 }
 
 </style>

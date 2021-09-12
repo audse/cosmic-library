@@ -22,19 +22,19 @@
                 <co-badge content="header-right" :color="white" uppercase />
             </template>
             <template #before>
-                <co-button label="before-content" :color="emphasis" subtle sm uppercase /> <LoremIpsum add="5w" />
+                <co-button label="before" :color="emphasis" subtle sm uppercase /> <LoremIpsum add="5w" />
             </template>
             <template #actions>
                 <co-button label="Actions" :color="emphasis" subtle sm />
             </template>
             <template #actions-right>
-                <co-button label="Actions-Right" :color="emphasis" :text-color="truewhite" filled />
+                <co-button label="Actions-Right" :color="emphasis" :label-color="truewhite" filled />
             </template>
         </co-card>
     </section>
 
     <section>
-        <co-card :bg="bg" :classes="classes" shadow-dark margin-lg>
+        <co-card :bg="bg" :classes="classes" shadow-dark >
             <template #header>
                 <co-title h5 title="My Second co-card" :classes="classes">
                     <template #subtitle><LoremIpsum add="4-8w" /></template>
@@ -45,12 +45,9 @@
                     <i class="gg-close" :style="{color: white}" />
                 </co-button>
             </template>
-            <template #before-content>
-                <co-button label="&times;" :color="grey" light />
-            </template>
         </co-card>
 
-        <co-card :bg="emphasis" :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark margin-lg>
+        <co-card :bg="emphasis" :classes="{ card: 'co-bg', card: 'co-bg-mixemphasis'}" shadow-dark >
             <template #header>
                 <co-title h5 title="My Third co-card" :classes="{title: 'co-text-truewhite', subtitle: 'co-text-emphasis-text'}">
                     <template #subtitle><LoremIpsum add="4-8w" /></template>
@@ -69,25 +66,25 @@
     </section>
 
     <section>
-        <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+        <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark >
             <template #header><co-title title="Option A" /></template>
             <LoremIpsum add="10w" />
             <template #actions>
                 <co-button label="Option A" :color="white" subtle />
             </template>
         </co-card>
-        <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+        <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark >
             <template #header><co-title title="Option B" /></template>
             <LoremIpsum add="10w" />
             <template #actions>
                 <co-button label="Option B" :color="emphasis" outline />
             </template>
         </co-card>
-        <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark margin-sm>
+        <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark >
             <template #header><co-title title="Option C" /></template>
             <LoremIpsum add="10w" />
             <template #actions>
-                <co-button label="Option C" :color="emphasis" filled :text-color="truewhite" />
+                <co-button label="Option C" :color="emphasis" filled :label-color="truewhite" />
             </template>
         </co-card>
     </section>
@@ -113,6 +110,7 @@
         <p>
             <co-badge left="#" content="actions" :color="white" />
             <co-badge left="#" content="actions-right" :color="white" />
+            These slots are semantic- wrapper in footer and nav tags, respectively.
         </p>
 
         <div class="space-below" />
@@ -120,14 +118,6 @@
 
     <!-- Props -->
     <template #props>
-
-        <p>
-            <co-badge content="boolean" :color="emphasis" />
-            <co-badge content="no-margin" :color="white" />
-            <co-badge content="margin-sm" :color="white" />
-            <co-badge content="margin-lg" :color="white" />
-        </p>
-
 
         <p>
             <co-badge content="boolean" :color="emphasis" />
@@ -199,6 +189,7 @@ export default defineComponent({
         const darkbg = '#1d212b'
 
         const classes = {
+            container: 'co-margin-sm',
             card: 'co-bg',
             before: 'co-padding co-bg-lightemphasis co-text-emphasis-text',
             overline: 'co-text-emphasis',

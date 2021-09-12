@@ -74,6 +74,14 @@ $co-color-text-tint-1: mix($co-color-text-tint-2, $co-color-text);
     padding: 0.5em 1.5em;
 }
 
+.co-margin-left-sm {
+    margin-left: 0.5em;
+}
+
+.co-margin-left-md {
+    margin-left: 1em;
+}
+
 .co-center {
     align-self: center;
     justify-self: center;

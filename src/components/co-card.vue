@@ -1,72 +1,79 @@
 <template>
 
-<div :class="['co-card-container', marginSm ? 'co-card-margin-sm' : marginLg ? 'co-card-margin-lg' : !noMargin ? 'co-card-margin' : '']">
-<div :class="['co-card', class_list.card, shadowLight ? 'co-card-shadow-light' : shadowDark ? 'co-card-shadow-dark' : shadow ? 'co-card-shadow' : '']">
+<section :class="['container', classList.container]">
+<article :class="['co-card', classList.card, shadowLight ? 'shadow-light' : shadowDark ? 'shadow-dark' : shadow ? 'shadow' : '']">
 
-    <div v-if="!has_header && !has_toolbar && !noSpacer" class="co-card-spacer" />
 
-    <!-- `co-card-top` container -->
-    <div v-if="has_header" :class="['co-card-top', class_list.top]">
+    <!-- Adds padding (because of the large border-radius) before the content, if not toolbar exists -->
+    <div v-if="!has.header && !has.toolbar && !noSpacer" class="spacer" />
+    <!-- `top` container -->
+    <header v-if="has.header" :class="[classList.top]">
 
-        <div v-if="!has_toolbar && !noSpacer" class="co-card-spacer" />
+        <!-- Adds padding (because of the large border-radius) before the header content/toolbar -->
+        <div v-if="!has.toolbar && !noSpacer" class="spacer" />
 
-        <div v-if="has_toolbar" class="co-card-toolbar">
-            <div class="co-card-toolbar-left">
+        <nav v-if="has.toolbar" class="toolbar">
+            <section class="toolbar-left">
                 <slot name="toolbar"></slot>
-            </div>
-            <div v-if="has_toolbar_right" class="co-card-toolbar-right">
+            </section>
+            <section v-if="has.toolbarRight" class="toolbar-right">
                 <slot name="toolbar-right"></slot>
-            </div>
-        </div>
+            </section>
+        </nav>
 
-        <!-- `co-card-header` container -->
-        <div :class="['co-card-header', class_list.header]">
-            <div class="co-card-toolbar-dense">
-                <div class="co-card-toolbar-left">
+        <!-- `header` container -->
+        <main :class="['header', classList.header]">
+            <section class="toolbar-dense">
+                <div class="toolbar-left">
                     <slot name="header"></slot>
                 </div>
-                <div  v-if="has_header_right" class="co-card-toolbar-right">
+                <div  v-if="has.headerRight" class="toolbar-right">
                     <slot name="header-right"></slot>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
 
-    </div>
+    </header>
 
-    <div v-if="has_before_content" :class="['co-card-before-content', class_list.before, only_before_content ? 'co-card-border-radius' : '']">
+    <!-- Adds padding (because of the large border-radius) before the content, if not toolbar exists -->
+    <div v-if="!has.header && !has.toolbar && !noSpacer" class="spacer" />
+
+    <section v-if="has.before" :class="['before-content', classList.before, hasOnlyBefore ? 'border-radius' : '']">
         <!-- #before slot -->
         <slot name="before"></slot>
-    </div>
+    </section>
 
-    <!-- `co-card-content` container -->
-    <div v-if="has_content" :class="['co-card-content', class_list.content]">
+    <!-- `content` container -->
+    <main v-if="has.content" :class="['content', classList.content]">
 
         <!-- #content slot -->
         <slot></slot>
 
-    </div>
+    </main>
 
-    <div v-if="!has_actions && !noSpacer" class="co-card-spacer" />
+    <!-- Adds padding (because of the large border-radius) before the actions -->
+    <div v-if="!has.actions && !noSpacer" class="spacer" />
 
-    <!-- `co-card-actions` container -->
-    <div v-if="has_actions" :class="['co-card-actions', class_list.actions]">
+    <!-- `actions` container -->
+    <footer v-if="has.actions" :class="['actions', classList.actions]">
 
         <!-- #actions slot -->
-        <div class="co-card-toolbar-left">
+        <nav class="toolbar-left">
             <slot name="actions"></slot>
-        </div>
-        <div  v-if="has_actions_right" class="co-card-toolbar-right">
+        </nav>
+        <nav  v-if="has.actionsRight" class="toolbar-right">
             <slot name="actions-right"></slot>
-        </div>
+        </nav>
 
-    </div>
-</div>
-</div>
+    </footer>
+
+</article>
+</section>
 
 </template>
 <script>
 
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, reactive } from 'vue'
 
 export default defineComponent({
 
@@ -80,10 +87,6 @@ export default defineComponent({
 
         dense: Boolean,
 
-        noMargin: Boolean,
-        marginSm: Boolean,
-        marginLg: Boolean,
-
         lessRound: Boolean,
         noSpacer: Boolean,
         shadow: Boolean,
@@ -94,36 +97,40 @@ export default defineComponent({
 
     setup ( props, { slots } ) {
 
-        const class_list = computed( () => props.classes ? props.classes : {} )
+        const classList = computed( () => props.classes ? props.classes : {} )
 
-        const has_toolbar = computed( () => slots.toolbar || slots['toolbar-right'] ? true : false )
-        const has_toolbar_right = computed( () => slots['toolbar-right'] ? true : false )
-        const has_header = computed( () => slots.header || slots['header-right'] ? true : false )
-        const has_header_right = computed( () => slots['header-right'] ? true : false )
-        const has_before_content = computed( () => slots.before ? true : false )
-        const has_content = computed( () => slots.default ? true : false )
-        const has_actions = computed( () => slots.actions || slots['actions-right'] ? true : false )
-        const has_actions_right = computed( () => slots['actions-right'] ? true : false )
+        const has = reactive({
+            toolbar: slots.toolbar || slots['toolbar-right'] ? true : false,
+            toolbarRight: slots['toolbar-right'] ? true : false,
+            header: slots.header || slots['header-right'] ? true : false,
+            headerRight: slots['header-right'] ? true : false,
+            before: slots.before ? true : false,
+            content: slots.default ? true : false,
+            actions: slots.actions || slots['actions-right'] ? true : false,
+            actionsRight: slots['actions-right'] ? true : false,
+        })
 
-        const only_before_content = computed( () => has_before_content.value && !has_toolbar.value && !has_header.value && !has_content.value && !has_actions.value )
+        const hasOnlyBefore = computed( () => {
+            return ( 
+                !has.toolbar && 
+                !has.header && 
+                !has.content && 
+                !has.actions && 
+                has.before
+            )
+        })
 
-        const border_radius = computed( () => props.lessRound ? '1.5em' : '3.5em' )
+        const borderRadius = computed( () => props.lessRound ? '1.5em' : '3.5em' )
 
         const background = computed( () => props.bg ? props.bg : 'initial')
 
         return {
-            class_list,
-            has_toolbar,
-            has_toolbar_right,
-            has_header,
-            has_header_right,
-            has_before_content,
-            only_before_content,
-            has_content,
-            has_actions_right,
-            has_actions,
+            classList,
+
+            has,
+            hasOnlyBefore,
             
-            border_radius,
+            borderRadius,
             background
         }
 
@@ -135,43 +142,23 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 
-.co-card-container, 
-.co-card-margin, 
-.co-card, 
-.co-card-top, 
-.co-card-toolbar,
-.co-card-header, 
-.co-card-before-content, 
-.co-card-content, 
-.co-card-actions {
+* {
     box-sizing: border-box;
-    max-width: 100%;
+    display: block;
     width: 100%;
+    height: fit-content;
 }
 
-.co-card-margin {
-    margin: 0.5em;
+.spacer {
+    padding-top: calc( v-bind(borderRadius) / 2 );
 }
 
-.co-card-margin-sm {
-    margin: 0.25em;
+.border-radius {
+    border-radius: v-bind(borderRadius);
 }
 
-
-.co-card-margin-lg {
-    margin: 0.75em;
-}
-
-.co-card-spacer {
-    padding-top: 1.5em;
-}
-
-.co-card-border-radius {
-    border-radius: v-bind(border_radius);
-}
-
-.co-card-container {
-    flex: 1;
+.container {
+    flex: 1 auto;
     position: relative;
 }
 
@@ -182,67 +169,72 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
 
-    border-radius: v-bind(border_radius);
+    border-radius: v-bind(borderRadius);
     min-height: 8em;
     height: auto;
 }
 
-.co-card-shadow-light {
+.shadow-light {
     box-shadow: 0px 5px 15px -10px rgba(0, 0, 0, 0.15);
 }
 
-.co-card-shadow {
+.shadow {
     box-shadow: 0px 5px 15px -10px rgba(0, 0, 0, 0.3);
 }
 
-.co-card-shadow-dark {
+.shadow-dark {
     box-shadow: 0px 5px 20px -15px rgba(0, 0, 0, 0.7);
 }
 
-.co-card-top {
+header {
     
     /* Box Style */
-    border-radius: v-bind(border_radius) v-bind(border_radius) 0 0;
+    border-radius: v-bind(borderRadius) v-bind(borderRadius) 0 0;
+    display: block;
 
     /* Positioning */
-    flex: 1;
+    flex: 1 auto;
     
     /* Sizing */
-    min-height:  v-bind(border_radius);
+    min-height:  v-bind(borderRadius);
 
 }
 
-.co-card-toolbar {
+.toolbar {
     display: flex;
     align-items: center;
     padding: 1.75em 2.5em 0.25em 2.5em;
 }
 
-.co-card-toolbar-dense {
+.toolbar-dense {
     display: flex;
 }
 
-.co-card-toolbar-left {
+.toolbar-left, .toolbar-right {
     flex: 1 auto;
     align-self: center;
 }
 
-.co-card-toolbar-right {
-    flex: 1 auto;
-    align-self: center;
+.toolbar-right {
+
+    /* Right Align */
     text-align: right;
-    margin-left: 1.5em;
+    justify-content: right;
+    justify-self: right;
+
+    /* Left Spacing */
+    padding-left: 1.5em;
 }
 
-.co-card-header {
+.header {
     padding: 0.25em 0.75em 0.25em 0.75em;
 }
 
-.co-card-before-content {
-    flex: 1;
+.before-content {
+    flex: 1 auto;
 }
 
-.co-card-content {
+.content {
 
     /* Text */
     line-height: 1.6;
@@ -251,22 +243,23 @@ export default defineComponent({
     padding: 0.75em 0.75em 1.5em 0.75em;
 
     /* Positioning */
-    flex: 1;
+    flex: 1 auto;
 }
 
-.co-card-actions {
+.actions {
 
     /* Box Style */
-    border-radius: 0 0  v-bind(border_radius)  v-bind(border_radius);
+    border-radius: 0 0  v-bind(borderRadius)  v-bind(borderRadius);
     padding: 0.75em 2em 1.25em 2em;
 
     /* Positioning */
-    flex: 1;
+    flex: 1 auto;
     align-self: flex-end;
     display: flex;
 
     /* Sizing */
-    min-height: v-bind(border_radius);
+    min-height: v-bind(borderRadius);
+    width: 100%;
     
 
 }
