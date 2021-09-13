@@ -1,6 +1,6 @@
 <template>
 
-<div class="container">
+<main>
 
     <co-title h2 
     title="Cosmic Component Library" 
@@ -15,7 +15,7 @@
     <co-menu-examples />
     <co-card-examples />
 
-</div>
+</main>
 
 </template>
 

@@ -1,27 +1,25 @@
 <template>
 
-<header :class="[classList.titleGroup, inline ? 'inline' : '']">
-    <main :class="[classList.title]">
+<header :class="[classList.title, inline ? 'inline' : '']">
 
-        <strong :class="[classList.overline]">
-            {{ overline }}
-            <slot name="overline"></slot>
-        </strong>
+    <strong :class="[classList.overline]">
+        {{ overline }}
+        <slot name="overline"></slot>
+    </strong>
 
-        {{ title }}
+    {{ title }}
 
-        <slot></slot>
+    <slot></slot>
 
-        <aside v-if="side" :class="[classList.subtitle]">
-            {{ subtitle }}
-            <slot name="subtitle-side"></slot>
-        </aside>
-        
-    </main>
-    <p v-if="!side" :class="[classList.subtitle]">
+    <aside v-if="side" :class="[classList.subtitle]">
+        {{ subtitle }}
+        <slot name="subtitle"></slot>
+    </aside>
+    <p v-else :class="[classList.subtitle]">
         {{ subtitle }}
         <slot name="subtitle"></slot>
     </p>
+
 </header>
 
 </template>
@@ -112,21 +110,17 @@ export default defineComponent({
 
 header {
     font-size: v-bind(titleFontSize);
-}
-
-header.inline {
-    display: inline-block;
-    width: fit-content;
-}
-
-/* Title */
-main {
-    font-size: 1em;
+    
     font-weight: v-bind(fontWeight);
     line-height: v-bind(lineHeight);
     letter-spacing: -0.015em;
 
     padding: 1em 0 0.25em 0;
+}
+
+header.inline {
+    display: inline-block;
+    width: fit-content;
 }
 
 /* Subtitle */

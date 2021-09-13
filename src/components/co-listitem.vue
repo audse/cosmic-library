@@ -12,9 +12,7 @@
     </section>
 
     <section v-if="this.$slots.default" :class="['content', classList.content]">
-        <main>
-            <slot></slot>
-        </main>
+        <slot></slot>
     </section>
 
     <aside v-if="this.$slots.right" :class="['right', classList.right]">

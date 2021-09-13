@@ -1,9 +1,9 @@
 <template>
 
 <figure :class="classList.avatar">
-    <main :class="classList.content">
+    <figcaption :class="classList.content">
         <slot></slot>
-    </main>
+    </figcaption>
 </figure>
 
 </template>
@@ -71,8 +71,9 @@ figure {
     height: v-bind(size);
 }
 
-main {
+figcaption {
     /* Positioning */
+    display: block;
     position: absolute;
     top: 50%;
     left: 50%;

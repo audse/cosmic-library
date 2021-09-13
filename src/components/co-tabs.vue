@@ -73,7 +73,8 @@ export default defineComponent({
     box-sizing: border-box;
     display: block;
     position: relative;
-
+    padding: 0;
+    margin: 0;
 }
 
 section.container {

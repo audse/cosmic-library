@@ -54,9 +54,9 @@
                             </section>
 
                             <!-- Simple Main Content Block -->
-                            <main v-if="this.$slots.main" :class="[classList.main]">
+                            <section v-if="this.$slots.content" :class="['content', classList.content]">
                                 <slot name="content" :coMenu="coMenu"></slot>
-                            </main>
+                            </section>
 
                         </article>
                     </section>
@@ -618,7 +618,7 @@ header {
 }
 
 // Main Simple Content Slot
-main {
+section.content {
     padding: 0 2.5em 2em 1.5em;
     text-align: left;
 }

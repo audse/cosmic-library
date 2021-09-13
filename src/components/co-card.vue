@@ -1,7 +1,7 @@
 <template>
 
-<section :class="['container', classList.container]">
-<article :class="['co-card', classList.card, shadowLight ? 'shadow-light' : shadowDark ? 'shadow-dark' : shadow ? 'shadow' : '']">
+<article :class="['container', classList.container]">
+<section :class="['co-card', classList.card, shadowLight ? 'shadow-light' : shadowDark ? 'shadow-dark' : shadow ? 'shadow' : '']">
 
 
     <!-- Adds padding (because of the large border-radius) before the content, if not toolbar exists -->
@@ -22,16 +22,14 @@
         </nav>
 
         <!-- `header` container -->
-        <main :class="['header', classList.header]">
-            <section class="toolbar-dense">
-                <div class="toolbar-left">
-                    <slot name="header"></slot>
-                </div>
-                <div  v-if="has.headerRight" class="toolbar-right">
-                    <slot name="header-right"></slot>
-                </div>
+        <section :class="['header', classList.header]">
+            <section class="toolbar-left">
+                <slot name="header"></slot>
             </section>
-        </main>
+            <section  v-if="has.headerRight" class="toolbar-right">
+                <slot name="header-right"></slot>
+            </section>
+        </section>
 
     </header>
 
@@ -44,12 +42,12 @@
     </section>
 
     <!-- `content` container -->
-    <main v-if="has.content" :class="['content', classList.content]">
+    <section v-if="has.content" :class="['content', classList.content]">
 
         <!-- #content slot -->
         <slot></slot>
 
-    </main>
+    </section>
 
     <!-- Adds padding (because of the large border-radius) before the actions -->
     <div v-if="!has.actions && !noSpacer" class="spacer" />
@@ -67,8 +65,8 @@
 
     </footer>
 
-</article>
 </section>
+</article>
 
 </template>
 <script>
@@ -206,16 +204,14 @@ header {
     padding: 1.75em 2.5em 0.25em 2.5em;
 }
 
-.toolbar-dense {
-    display: flex;
-}
-
 .toolbar-left, .toolbar-right {
     flex: 1 auto;
     align-self: center;
 }
 
 .toolbar-right {
+
+    width: fit-content;
 
     /* Right Align */
     text-align: right;
@@ -228,6 +224,7 @@ header {
 
 .header {
     padding: 0.25em 0.75em 0.25em 0.75em;
+    display: flex;
 }
 
 .before-content {
