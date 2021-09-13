@@ -150,7 +150,7 @@ export default defineComponent({
 }
 
 .spacer {
-    padding-top: calc( v-bind(borderRadius) / 2 );
+    padding-top: v-bind(borderRadius);
 }
 
 .border-radius {

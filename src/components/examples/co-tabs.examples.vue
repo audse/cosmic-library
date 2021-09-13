@@ -59,6 +59,10 @@
             <co-badge content="boolean" :color="hex.emphasis" />
             <co-badge content="less-round" :color="hex.white" />
         </p>
+        <p>
+            <co-badge content="boolean" :color="hex.emphasis" />
+            <co-badge content="no-padding" :color="hex.white" />
+        </p>
     </template>
 
     <!-- Class Object -->

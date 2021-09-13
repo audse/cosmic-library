@@ -15,7 +15,7 @@
 
         <transition name="slide" mode="out-in">
 
-            <section :class="['panel', classList.panel]" :key="`panel-${currentTab}`">
+            <section :class="['panel', noPadding ? '' : 'panel-padding', classList.panel]" :key="`panel-${currentTab}`">
                 <slot :name="`panel-${currentTab}`"></slot>
             </section>
 
@@ -45,6 +45,7 @@ export default defineComponent({
         shadowLight: Boolean,
         shadowDark: Boolean,
         lessRound: Boolean,
+        noPadding: Boolean,
     },
 
     setup ( props ) {
@@ -162,9 +163,12 @@ main {
 }
 
 section.panel {
-    padding: v-bind(borderRadius) 1.5em;
     z-index: 10;
 
+}
+
+section.panel-padding {
+    padding: v-bind(borderRadius) 1.5em;
 }
 
 .shadow-light {

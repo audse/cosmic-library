@@ -46,7 +46,7 @@ export default defineComponent({
             button: computed( () => {
                 let string = ''
 
-                if ( props.classes ) string += ` ${props.classes}`
+                if ( props.classes && props.classes.button ) string += ` ${props.classes.button}`
 
                 if ( props.uppercase ) string += ' uppercase'
 
@@ -115,11 +115,10 @@ button {
     letter-spacing: unset;
     font-size: unset;
     font-family: unset;
-
-    white-space: nowrap !important;
+    word-wrap: normal;
     
     /* Background */
-    border-radius: 1.25em;
+    border-radius: 1.5em;
 
     /* Positioning */
     display: inline-block;
@@ -152,22 +151,19 @@ button {
         color: v-bind(textColor);
 
         /* Box Model */
-        border-radius: 1.25em;
-        display: block;
-        word-break: unset;
-        overflow-wrap: normal;
+        border-radius: 1.5em;
+        display: flex;
+        align-items: center;
 
         /* Spacing */
-        padding: 0.55em 0.9em;
+        padding: 0.55em 1.25em;
 
         /* Sizing */
-        width: 100%;
-        height: 100%;
+        min-width: 44px;
+        min-height: 44px;
 
         span {
             display: block;
-            width: 100%;
-            height: 100%;
 
             /* Text */
             letter-spacing: 0.5px;
@@ -180,6 +176,9 @@ button {
 
 .round, .round-sm, .round-lg {
 
+    min-width: 0;
+    min-height: 0;
+
     span {
         position: absolute;
         top: 50%;
@@ -189,13 +188,13 @@ button {
 }
 
 .round {
-    width: 2.25em;
-    height: 2.25em;
+    width: 2.5em;
+    height: 2.5em;
 }
 
 .round-sm {
-    width: 1.75em;
-    height: 1.75em;
+    width: 2em;
+    height: 2em;
 }
 
 .round-lg {
@@ -212,7 +211,7 @@ button {
 
 .lg {
     font-size: 0.9rem;
-    padding: 0.5em 0.75em;
+    padding: 0.5em 1.5em;
 }
 
 .uppercase {

@@ -65,7 +65,7 @@
         </co-card>
     </section>
 
-    <section>
+    <section class="block">
         <co-card :bg="darkbg" :classes="{ card: 'co-center-text', content: 'co-text-tint-2' }" shadow-dark >
             <template #header><co-title title="Option A" /></template>
             <LoremIpsum add="10w" />

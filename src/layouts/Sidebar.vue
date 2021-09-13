@@ -15,6 +15,7 @@
     <co-title h6 title="layout" overline="components" :classes="title_classes" />
     <co-badge left="<" content="co-card" right=" />" :color="emphasis" /><br />
     <co-badge left="<" content="co-tabs" right=" />" :color="emphasis" /><br />
+    <co-badge left="<" content="co-list" right=" />" :color="emphasis" /><br />
 
     <co-title h6 title="navigation" overline="components" :classes="title_classes" />
     <co-badge left="<" content="co-menu" right=" />" :color="emphasis" /><br />

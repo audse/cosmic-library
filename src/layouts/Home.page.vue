@@ -9,15 +9,11 @@
     class="space-below" />
 
 
+    <co-list-examples />
+    <div class="large-space" />
     <co-tabs-examples />
-
-    <!-- <div class="hidden"> -->
-        <div class="large-space" />
-        <co-menu-examples />
-
-
-        <co-card-examples />
-    <!-- </div> -->
+    <co-menu-examples />
+    <co-card-examples />
 
 </div>
 
@@ -31,6 +27,7 @@ import CoTitle from './../components/co-title'
 import CoMenuExamples from './../components/examples/co-menu.examples'
 import CoCardExamples from './../components/examples/co-card.examples'
 import CoTabsExamples from './../components/examples/co-tabs.examples'
+import CoListExamples from './../components/examples/co-list.examples'
 
 export default defineComponent({
     
@@ -40,6 +37,7 @@ export default defineComponent({
         CoMenuExamples,
         CoCardExamples,
         CoTabsExamples,
+        CoListExamples,
         CoTitle
     },
 
