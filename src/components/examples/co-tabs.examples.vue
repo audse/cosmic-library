@@ -3,7 +3,7 @@
 <examples component="co-tabs" subtitle="co-tabs are a container for displaying sections of content.">
 
     <!-- Examples -->
-    <co-card :bg="hex.darkbg" shadow-dark no-spacer :classes="{ before: 'space-above' }">
+    <co-card :bg="hex.darkergrey" shadow-dark no-spacer :classes="{ before: 'space-above' }">
         <template #before>
             <co-title h5 class="co-padding">
                 <co-badge left="<" content="co-tabs" right=" />" :color="hex.white" />

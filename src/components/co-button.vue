@@ -96,12 +96,16 @@ export default defineComponent({
 <style lang="scss" scoped>
 
 * {
+    display: inline-block;
     box-sizing: border-box;
     z-index: 1;
+    position: relative;
+    padding: 0;
+    margin: 0;
 }
 
-/* Button Reset */
 button {
+    /* Reset */
     border: 0;
     outline: 0;
     background: unset;
@@ -111,11 +115,8 @@ button {
     letter-spacing: unset;
     font-size: unset;
     font-family: unset;
-    display: inline;
-}
 
-/* Button Styles */
-button {
+    white-space: nowrap !important;
     
     /* Background */
     border-radius: 1.25em;
@@ -129,6 +130,7 @@ button {
 
     /* Sizing */
     width:  fit-content;
+    min-width: fit-content;
 
     &:hover {
         transform: translate(0, -1px);
@@ -141,31 +143,39 @@ button {
     &:focus-visible {
         outline: auto;
     }
-}
 
-label {
+    label {
 
-    /* Styles */
-    border: v-bind(border);
-    background-color: v-bind(backgroundColor);
-    color: v-bind(textColor);
+        /* Styles */
+        border: v-bind(border);
+        background-color: v-bind(backgroundColor);
+        color: v-bind(textColor);
 
-    /* Background */
-    border-radius: 1.25em;
+        /* Box Model */
+        border-radius: 1.25em;
+        display: block;
+        word-break: unset;
+        overflow-wrap: normal;
 
-    /* Text */
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    font-size: 0.8rem;
+        /* Spacing */
+        padding: 0.55em 0.9em;
 
-    /* Positioning */
-    position: relative;
+        /* Sizing */
+        width: 100%;
+        height: 100%;
 
-    /* Spacing */
-    padding: 0.55em 0.9em;
+        span {
+            display: block;
+            width: 100%;
+            height: 100%;
 
-    /* Sizing */
-    width: fit-content;
+            /* Text */
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            
+        }
+    }
 }
 
 .round, .round-sm, .round-lg {
@@ -201,7 +211,7 @@ label {
 }
 
 .lg {
-    font-size: 1rem;
+    font-size: 0.9rem;
     padding: 0.5em 0.75em;
 }
 

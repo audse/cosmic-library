@@ -2,7 +2,7 @@
     
 <span :class="[classList.badge, uppercase ? 'uppercase' : '', lg ? 'lg' : sm ? 'sm' : 'md', noWrap ? 'no-wrap' : '']">
 
-    <aside v-if="this.$slots.left" :class="classList.left">
+    <aside v-if="this.$slots.left || left" :class="classList.left">
         {{ left }}
         <slot name="left"></slot>
     </aside>
@@ -10,7 +10,7 @@
     {{ content }}
     <slot></slot>
 
-    <aside v-if="this.$slots.right" :class="classList.right">
+    <aside v-if="this.$slots.right || right" :class="classList.right">
         {{ right }}
         <slot name="right"></slot>
     </aside>
@@ -27,6 +27,8 @@ export default defineComponent({
 
     props: {
         content: String,
+        left: String,
+        right: String,
 
         classes: Object,
 

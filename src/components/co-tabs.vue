@@ -1,23 +1,25 @@
 <template>
     
-<section class="container">
+<section :class="['container', classList.container]">
 
     <!-- Tab Labels -->
     <nav :class="['labels']">
-        <label v-for="tab in tabs" :key="`label-${tab}`" :class="[tab===current_tab ? 'label-active' : '']" @click="current_tab=tab" @keyup.enter="current_tab=tab" tabindex="0">
-            <span :for="`Tab ${tab}`"><slot :name="`label-${tab}`"></slot></span>
+        <label v-for="tab in tabs" :key="`label-${tab}`" :class="[tab===currentTab ? 'label-active' : '', classList.label]" @click="currentTab=tab" @keyup.enter="currentTab=tab" tabindex="0" :for="`Tab ${tab}`">
+            <slot :name="`label-${tab}`"></slot>
         </label>
     </nav>
 
     <!-- Tab Panel -->
     <main :class="[shadow ? 'shadow' : shadowLight ? 'shadow-light' : shadowDark ? 'shadow-dark' : '']">
         
-        <section v-for="tab in tabs" :key="`panel-${tab}`">
-            <section v-show="current_tab===tab" class="panel">
-                <slot :name="`panel-${tab}`"></slot>
-            </section>
-        </section>
 
+        <transition name="slide" mode="out-in">
+
+            <section :class="['panel', classList.panel]" :key="`panel-${currentTab}`">
+                <slot :name="`panel-${currentTab}`"></slot>
+            </section>
+
+        </transition>
     </main>
 
 </section>
@@ -47,16 +49,16 @@ export default defineComponent({
 
     setup ( props ) {
 
-        const class_list = reactive( props.classes ? props.classes : {} )
+        const classList = reactive( props.classes ? props.classes : {} )
 
-        const border_radius = props.lessRound ? '1.5em' : '3.5em'
+        const borderRadius = props.lessRound ? '1.5em' : '3.5em'
 
-        const current_tab = ref(props.startTab ? props.startTab : 1)
+        const currentTab = ref(props.startTab ? props.startTab : 1)
 
         return {
-            class_list,
-            border_radius,
-            current_tab
+            classList,
+            borderRadius,
+            currentTab,
         }
         
     },
@@ -68,6 +70,9 @@ export default defineComponent({
 
 * {
     box-sizing: border-box;
+    display: block;
+    position: relative;
+
 }
 
 section.container {
@@ -88,6 +93,7 @@ nav {
     display: flex;
     justify-content: center;
     z-index: 1;
+    width: 100%;
 }
 
 label {
@@ -95,19 +101,22 @@ label {
     position: relative;
     cursor: pointer;
 
-    width: 100%;
-    min-height: calc( v-bind(border_radius) + 0.5em );
-    border-radius: v-bind(border_radius) v-bind(border_radius) 0 0;
+    flex: 1 auto;
+    flex-basis: calc( 100% / v-bind(tabs) );
+
+    min-height: calc( v-bind(borderRadius) + 0.5em );
+    border-radius: v-bind(borderRadius) v-bind(borderRadius) 0 0;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
 
-    padding: 1em 0 calc( v-bind(border_radius) + 0.5em ) 0;
+    padding: 1em 0 calc( v-bind(borderRadius) + 0.5em ) 0;
 
-    margin-left: calc( ( v-bind(border_radius) - 0.5em ) * -1 );
     transition: 150ms;
     margin-top: 5px;
     z-index: 1;
+
+    outline: none;
 
     &:first-of-type {
         margin-left: 0;
@@ -121,7 +130,7 @@ label {
 
     &:hover {
         opacity: 0.75;
-        transition: 150ms;
+        transition: all 150ms;
     }
 
 }
@@ -130,7 +139,8 @@ label {
     background: v-bind(bg);
     opacity: 1;
     z-index: 2;
-    width: 120%;
+    
+    flex-basis: calc( ( 100% / v-bind(tabs) ) + 10% );
 
     span {
         opacity: 1;
@@ -138,21 +148,21 @@ label {
 
     &:hover {
         opacity: 1;
-        transition: 150ms;
+        transition: all 150ms;
         margin-top: 0px;
     }
 }
 
 main {
     background: v-bind(bg);
-    border-radius: v-bind(border_radius);
-    margin-top: calc( -1 * v-bind(border_radius) );
+    border-radius: v-bind(borderRadius);
+    margin-top: calc( -1 * v-bind(borderRadius) );
     min-height: 8em;
     z-index: 10;
 }
 
 section.panel {
-    padding: v-bind(border_radius) 1.5em;
+    padding: v-bind(borderRadius) 1.5em;
     z-index: 10;
 
 }
@@ -167,6 +177,30 @@ section.panel {
 
 .shadow-dark {
     box-shadow: 0px 10px 30px -20px rgba(0, 0, 0, 0.7);
+}
+
+.slide-enter-from {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.slide-enter-to {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.slide-leave-from {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.slide-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.slide-enter-active, .slide-leave-active {
+    transition: all 250ms;
 }
 
 </style>
