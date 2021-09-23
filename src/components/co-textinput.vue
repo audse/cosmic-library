@@ -258,7 +258,7 @@ section.focused {
 
     input.outline {
         /* Remove part of border when label hovers */
-        clip-path: polygon(1.25em 2px, calc( v-bind(labelWidth) + 1.75em ) 2px, calc( v-bind(labelWidth) + 1.75em ) 0, 100% 0, 100% 100%, 0 100%, 0 0, 1.25em 0);
+        clip-path: polygon(0em 2px, calc( v-bind(labelWidth) + 0.75em ) 2px, calc( v-bind(labelWidth) + 0.75em ) 0, 100% 0, 100% 100%, 0 100%, 0 0, 1.25em 0);
         transition: all 200ms;
     }
 
