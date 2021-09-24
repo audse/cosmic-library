@@ -67,9 +67,9 @@ import { defineComponent } from 'vue'
 
 import hex from './../../utils/hex.utils'
 
-import CoTabs from './../co-tabs'
-import CoTitle from './../co-title'
-import CoBadge from './../co-badge'
+import CoTabs from './../co-tabs.vue'
+import CoTitle from './../co-title.vue'
+import CoBadge from './../co-badge.vue'
 
 export default defineComponent({
 

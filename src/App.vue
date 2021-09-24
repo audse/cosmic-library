@@ -1,25 +1,31 @@
 <template>
 
-<div id="wrapper">
+<main>
 
-    <Sidebar />
-    <HomePage />
+<co-card-examples />
 
-</div>
+</main>
 
 </template>
 
-<script>
-import Sidebar from './layouts/Sidebar'
-import HomePage from './layouts/Home.page'
+<script lang="ts">
+
+import CoCardExamples from './components/examples/co-card.examples.vue'
 
 export default {
 
     name: 'App',
 
     components: {
-        Sidebar,
-        HomePage
+        CoCardExamples,
     }
 }
+
 </script>
+<style scoped>
+
+main {
+    @apply w-9/12 m-auto;
+}
+
+</style>

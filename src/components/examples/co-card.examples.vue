@@ -33,7 +33,7 @@
         </co-card>
     </section>
 
-    <section>
+    <section class="flex">
         <co-card :bg="bg" :classes="classes" shadow-dark >
             <template #header>
                 <co-title h5 title="My Second co-card" :classes="classes">
@@ -157,11 +157,11 @@ import { defineComponent } from 'vue'
 
 import LoremIpsum from 'vue-lorem-ipsum'
 
-import CoBadge from './../co-badge'
-import CoButton from './../co-button'
-import CoTitle from './../co-title'
-import CoCard from './../co-card'
-import Examples from './examples'
+import CoBadge from './../co-badge.vue'
+import CoButton from './../co-button.vue'
+import CoTitle from './../co-title.vue'
+import CoCard from './../co-card.vue'
+import Examples from './examples.vue'
 
 export default defineComponent({
     
@@ -221,5 +221,4 @@ export default defineComponent({
     display: flex;
     align-items: center;
 }
-
 </style>

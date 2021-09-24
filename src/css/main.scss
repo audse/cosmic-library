@@ -1,0 +1,11 @@
+@import 'include-media';
+@import 'icons';
+
+@import 'cosmic.utils';
+
+body, html, #app {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 16px;
+    background-color: #1d212b;
+    color: #d6dfe9;
+}
