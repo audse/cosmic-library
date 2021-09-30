@@ -80,11 +80,11 @@ import { defineComponent } from 'vue'
 
 import hex from './../../utils/hex.utils'
 
-import Examples from './examples'
-import CoTabs from './../co-tabs'
-import CoTitle from './../co-title'
-import CoBadge from './../co-badge'
-import CoCard from './../co-card'
+import Examples from './examples.vue'
+import CoTabs from './../co-tabs.vue'
+import CoTitle from './../co-title.vue'
+import CoBadge from './../co-badge.vue'
+import CoCard from './../co-card.vue'
 
 export default defineComponent({
 

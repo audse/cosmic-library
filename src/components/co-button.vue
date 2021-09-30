@@ -1,6 +1,6 @@
 <template>
     
-<button :class="classList.container">
+<button :class="['button', classList.container]">
     <label :class="classList.button" :type="type ? type : 'submit'">
         <span>
         {{ label }}
@@ -98,13 +98,12 @@ export default defineComponent({
 * {
     display: inline-block;
     box-sizing: border-box;
-    z-index: 1;
     position: relative;
     padding: 0;
     margin: 0;
 }
 
-button {
+.button {
     /* Reset */
     border: 0;
     outline: 0;
@@ -116,6 +115,8 @@ button {
     font-size: unset;
     font-family: unset;
     word-wrap: normal;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     
     /* Background */
     border-radius: 1.5em;
@@ -123,6 +124,7 @@ button {
     /* Positioning */
     display: inline-block;
     position: relative;
+    isolation: isolate;
 
     /* Spacing */
     margin: 0.25em 0.5em 0.25em 0;
@@ -135,6 +137,7 @@ button {
         transform: translate(0, -1px);
         opacity: 0.9;
         transition: 200ms;
+        -webkit-transition: 200ms;
         z-index: 1;
     }
 
@@ -147,7 +150,7 @@ button {
 
         /* Styles */
         border: v-bind(border);
-        background-color: v-bind(backgroundColor);
+        background: v-bind(backgroundColor);
         color: v-bind(textColor);
 
         /* Box Model */
@@ -161,6 +164,7 @@ button {
         /* Sizing */
         min-width: 44px;
         min-height: 44px;
+        
 
         span {
             display: block;
@@ -220,41 +224,29 @@ button {
 
 .ripple-filled, .ripple-subtle, .ripple-light, .ripple-outline {
     background-position: center;
+    background-blend-mode: screen;
     transition: background 800ms;
+    -webkit-transition: background 800ms;
     z-index: 1;
 }
 
 .ripple-filled:hover {
     background: v-bind(backgroundColor) radial-gradient(circle, transparent 1%, v-bind(backgroundColor) 1%) center/15000%;
-    background-blend-mode: screen;
-}
-
-.ripple-filled:active {
-    background-color: v-bind(backgroundColor);
-    background-size: 100%;
-    transition: background 0s;
 }
 
 .ripple-subtle:hover, .ripple-outline:hover {
     background: v-bind(colorOpacity25) radial-gradient(circle, transparent 1%, v-bind(colorOpacity25) 1%) center/15000%;
-    background-blend-mode: screen;
-}
-
-.ripple-subtle:active, .ripple-outline:active {
-    background-color: v-bind(backgroundColor);
-    background-size: 100%;
-    transition: background 0s;
 }
 
 .ripple-light:hover {
     background: v-bind(colorOpacity50) radial-gradient(circle, transparent 1%, v-bind(colorOpacity50) 1%) center/15000%;
-    background-blend-mode: screen;
 }
 
-.ripple-light:active {
+.ripple-filled:active, .ripple-subtle:active, .ripple-outline:active, .ripple-light:active {
     background-color: v-bind(backgroundColor);
     background-size: 100%;
     transition: background 0s;
+    -webkit-transition: background 0s;
 }
 
 

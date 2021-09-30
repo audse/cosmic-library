@@ -1,6 +1,6 @@
 <template>
 
-<section :class="[classList.group, focused ? 'focused' : '', modelValue ? 'hasText' : '', !noShadow ? 'shadow' : '' ]">
+<section :class="[classList.group, focused ? 'focused' : '', hasText, !noShadow ? 'shadow' : '' ]">
 
     <!-- Transition Label On Focus -->
     <label
@@ -15,7 +15,6 @@
     :id="`text-input-${label}`" 
     :aria-label="`text-input-${label}`"
     :placeholder="placeholder"
-    :value="modelValue"
     type="text"
     :class="[outlineColor && !material ? 'outline' : '', bg ? 'filled' : '', material ? 'material' : '']"
     @focus="focused=true"
@@ -28,7 +27,7 @@
 </template>
 <script>
 
-import { computed, defineComponent, reactive, ref } from 'vue'
+import { computed, defineComponent, reactive, ref, toRefs, watch } from 'vue'
 
 export default defineComponent({
 
@@ -60,6 +59,14 @@ export default defineComponent({
 
         const focused = ref(false)
 
+        const modelValueRef = toRefs(props).modelValue
+
+        const hasText = ref('')
+        watch(modelValueRef, () => {
+            if ( modelValueRef.value.length > 0 ) hasText.value = 'hasText'
+            else hasText.value = ''
+        })
+
         const sectionWidth = ref( props.width ? props.width : 'fit-content')
 
         const labelWidth = computed( () => {
@@ -81,7 +88,7 @@ export default defineComponent({
 
         const labelColor = !props.outlineColor && props.textColor ? props.textColor : props.outlineColor ? props.outlineColor : 'inherit'
 
-        const borderColor = changeOpacity(labelColor, 0.3)
+        const borderColor = changeOpacity(labelColor, 0.5)
         const placeholderTextColor = changeOpacity( props.placeholderColor ? props.placeholderColor : props.textColor ? props.textColor : labelColor, 0.5)
         const materialBorderColor = changeOpacity( props.textColor ? props.textColor : labelColor, 0.15)
         const inputColor = props.textColor ? props.textColor : 'inherit'
@@ -89,6 +96,7 @@ export default defineComponent({
         return {
             classList,
             focused,
+            hasText,
             sectionWidth,
             labelWidth,
             backgroundColor,
@@ -208,6 +216,7 @@ input.shadow {
 input.outline {
 
     /* Remove part of border-top when label hovers */
+    -webkit-clip-path: polygon(1.25em 0, calc( v-bind(labelWidth) + 1.75em ) 0, calc( v-bind(labelWidth) + 1.75em ) 0, 100% 0, 100% 100%, 0 100%, 0 0, 1.25em 0);
     clip-path: polygon(1.25em 0, calc( v-bind(labelWidth) + 1.75em ) 0, calc( v-bind(labelWidth) + 1.75em ) 0, 100% 0, 100% 100%, 0 100%, 0 0, 1.25em 0);
     transition: all 200ms;
 
@@ -258,6 +267,7 @@ section.focused {
 
     input.outline {
         /* Remove part of border when label hovers */
+        -webkit-clip-path: polygon(0em 2px, calc( v-bind(labelWidth) + 0.75em ) 2px, calc( v-bind(labelWidth) + 0.75em ) 0, 100% 0, 100% 100%, 0 100%, 0 0, 1.25em 0);
         clip-path: polygon(0em 2px, calc( v-bind(labelWidth) + 0.75em ) 2px, calc( v-bind(labelWidth) + 0.75em ) 0, 100% 0, 100% 100%, 0 100%, 0 0, 1.25em 0);
         transition: all 200ms;
     }

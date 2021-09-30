@@ -78,13 +78,13 @@ import LoremIpsum from 'vue-lorem-ipsum'
 
 import hex from './../../utils/hex.utils'
 
-import Examples from './examples'
-import CoList from './../co-list'
-import CoListItem from './../co-listitem'
-import CoTitle from './../co-title'
-import CoBadge from './../co-badge'
-import CoCard from './../co-card'
-import CoAvatar from './../co-avatar'
+import Examples from './examples.vue'
+import CoList from './../co-list.vue'
+import CoListItem from './../co-listitem.vue'
+import CoTitle from './../co-title.vue'
+import CoBadge from './../co-badge.vue'
+import CoCard from './../co-card.vue'
+import CoAvatar from './../co-avatar.vue'
 
 export default defineComponent({
 

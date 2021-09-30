@@ -238,11 +238,11 @@ import { defineComponent } from 'vue'
 
 import LoremIpsum from 'vue-lorem-ipsum'
 
-import Examples from './examples'
-import CoTitle from './../co-title'
-import CoButton from './../co-button'
-import CoBadge from './../co-badge'
-import CoMenu from './../co-menu'
+import Examples from './examples.vue'
+import CoTitle from './../co-title.vue'
+import CoButton from './../co-button.vue'
+import CoBadge from './../co-badge.vue'
+import CoMenu from './../co-menu.vue'
 
 export default defineComponent({
     

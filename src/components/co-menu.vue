@@ -12,7 +12,7 @@
             <slot></slot>
         </button>
 
-        <nav v-if="!reduceHoverArea && hover" class="hover-area" tabindex="0" @keyup.enter="mouseLeave" />
+        <nav v-if="!reduceHoverArea && hover" class="hover-area" @keyup.enter="mouseLeave" />
 
         <section :class="['container', right ? 'container-right' : center ? 'container-center' : 'container-left']">
     

@@ -61,6 +61,8 @@ export default defineComponent({
 
 ul::v-deep li {
 
+    background: rgba(0,0,0,0);
+
     display: flex;
     border-bottom: 1px solid v-bind(borderColor);
     align-items: center;
@@ -105,6 +107,7 @@ ul::v-deep li {
 ul.ripple::v-deep li {
     background-position: center;
     transition: background 800ms;
+    -webkit-transition: background 800ms;
     z-index: 1;
     
     &:hover {

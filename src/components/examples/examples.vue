@@ -1,7 +1,7 @@
 <template>
     
  
-<div class="space-below">
+<div class="space-above">
     <co-title h3 :subtitle="subtitle" :classes="classes">
         <co-badge left="<" :content="component" right=" />" :color="hex.emphasis" />
         {{ component }} <span class="co-text-tint-1">component</span>
@@ -14,7 +14,7 @@
 </article>
 
 
-<div class="block space-above">
+<div class="block space-above space-below">
     <co-tabs :tabs="5" :start-tab="1" :bg="hex.darkbg" shadow-dark>
         <template #label-1>
             <co-title h6 title="Slots" :classes="classes" />

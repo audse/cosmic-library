@@ -10,9 +10,8 @@
     </nav>
 
     <!-- Tab Panel -->
-    <main :class="[shadow ? 'shadow' : shadowLight ? 'shadow-light' : shadowDark ? 'shadow-dark' : '']">
+    <article :class="[shadow ? 'shadow' : shadowLight ? 'shadow-light' : shadowDark ? 'shadow-dark' : '']">
         
-
         <transition name="slide" mode="out-in">
 
             <section :class="['panel', noPadding ? '' : 'panel-padding', classList.panel]" :key="`panel-${currentTab}`">
@@ -20,14 +19,14 @@
             </section>
 
         </transition>
-    </main>
+    </article>
 
 </section>
 
 </template>
 
 <script>
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, ref, reactive, watch } from 'vue'
 
 export default defineComponent({
 
@@ -155,7 +154,7 @@ label {
     }
 }
 
-main {
+article {
     background: v-bind(bg);
     border-radius: v-bind(borderRadius);
     margin-top: calc( -1 * v-bind(borderRadius) );
@@ -185,22 +184,22 @@ section.panel-padding {
 }
 
 .slide-enter-from {
-    transform: translateX(100%);
+    transform: scaleY(0.9) translateX(33%);
     opacity: 0;
 }
 
 .slide-enter-to {
-    transform: translateX(0%);
+    transform: scaleY(1) translateX(0%);
     opacity: 1;
 }
 
 .slide-leave-from {
-    transform: translateX(0%);
+    transform: scaleY(1) translateX(0%);
     opacity: 1;
 }
 
 .slide-leave-to {
-    transform: translateX(-100%);
+    transform: scaleY(0.9) translateX(-33%);
     opacity: 0;
 }
 
